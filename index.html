@@ -122,11 +122,9 @@ function isCurrent(p){
 }
 
 async function readData(){
-  const h=getToken()?{'Authorization':'Bearer '+getToken()}:{};
-  const r=await fetch(API,{headers:h});
-  const j=await r.json();
-  SHA=j.sha;
-  DATA=JSON.parse(atob(j.content));
+  const r=await fetch(`https://raw.githubusercontent.com/${REPO}/main/data.json?t=${Date.now()}`);
+  DATA=await r.json();
+  if(getToken()){try{const a=await fetch(API,{headers:{'Authorization':'Bearer '+getToken()}});const aj=await a.json();SHA=aj.sha;}catch(e){}}
   return DATA;
 }
 
@@ -138,7 +136,7 @@ async function writeData(msg){
     const gr=await fetch(API,{headers:{'Authorization':'Bearer '+getToken()}});
     const gj=await gr.json();SHA=gj.sha;
     DATA.meta.last_updated=today();DATA.meta.updated_by='星星';
-    const c=btoa(unescape(encodeURIComponent(JSON.stringify(DATA,null,2))));
+    const jsonStr=JSON.stringify(DATA,null,2);const bytes=new TextEncoder().encode(jsonStr);let bin='';bytes.forEach(b=>bin+=String.fromCharCode(b));const c=btoa(bin);
     const r=await fetch(API,{method:'PUT',headers:{'Authorization':'Bearer '+getToken(),'Content-Type':'application/json'},body:JSON.stringify({message:msg,content:c,sha:SHA})});
     SAVING=false;showSaving(false);return r.ok;
   }catch(e){SAVING=false;showSaving(false);return false;}
