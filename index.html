@@ -3,99 +3,116 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>🍞 面包猫公主作战面板</title>
 <style>
-  :root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#e6edf3;--text2:#8b949e;--accent:#58a6ff;--green:#3fb950;--orange:#d29922;--red:#f85149;--purple:#bc8cff}
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);padding:16px;max-width:600px;margin:0 auto;line-height:1.6;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#1c1917;--card:#292524;--border:#3f3a36;
+  --text:#fafaf9;--text2:#a8a29e;
+  --gold:#f5b63e;--bread:#d4a574;--cream:#fde68a;
+  --mint:#86efac;--rose:#fca5a5;--lav:#c4b5fd;
+  --glass:rgba(255,255,255,.04)
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);padding:16px;max-width:600px;margin:0 auto;line-height:1.6;-webkit-tap-highlight-color:transparent}
 
-  .header{text-align:center;padding:20px 0 6px}
-  .header h1{font-size:20px}
-  .header .today{font-size:13px;color:var(--text2);margin-top:2px}
+.head{text-align:center;padding:20px 0 12px}
+.head h1{font-size:20px;background:linear-gradient(135deg,var(--gold),var(--bread));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.head .day{font-size:13px;color:var(--text2);margin-top:2px}
 
-  /* Countdown */
-  .cd{margin:14px 0}
-  .cd-item{display:flex;align-items:center;gap:10px;padding:9px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;font-size:13px}
-  .cd-item.soon{border-color:var(--orange)}
-  .cd-item.imm{border-color:var(--red);background:rgba(248,81,73,.06)}
-  .cd-item.passed{opacity:.35}
-  .cd-e{font-size:16px;flex-shrink:0}
-  .cd-l{flex:1}
-  .cd-n{font-size:11px;color:var(--text2)}
-  .cd-d{font-weight:700;font-size:14px;white-space:nowrap;min-width:55px;text-align:right}
+/* Anchors */
+.anchors{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:8px 0 16px}
+.atag{font-size:11px;background:rgba(245,182,62,.1);color:var(--gold);padding:4px 10px;border-radius:20px;border:1px solid rgba(245,182,62,.15)}
 
-  /* Daily tasks */
-  .daily{background:var(--card);border:2px solid var(--green);border-radius:14px;padding:14px 16px;margin:14px 0}
-  .daily-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-  .daily-head h2{font-size:16px;flex:1}
-  .daily-head .reset-hint{font-size:11px;color:var(--text2)}
-  .dtask{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04)}
-  .dtask:last-of-type{border-bottom:none}
-  .dcheck{width:22px;height:22px;border:2px solid var(--border);border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;-webkit-user-select:none;user-select:none}
-  .dcheck:active{transform:scale(.9)}
-  .dcheck.on{background:var(--green);border-color:var(--green)}
-  .dcheck.on::after{content:"✓";color:#fff;font-size:13px;font-weight:700}
-  .dtask.on .dlabel{text-decoration:line-through;color:var(--text2)}
-  .dlabel{font-size:14px;flex:1}
-  .ddel{font-size:16px;color:var(--text2);cursor:pointer;padding:0 4px;opacity:.4}
-  .ddel:active{opacity:1}
-  .add-row{display:flex;gap:8px;margin-top:10px}
-  .add-input{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:14px;outline:none}
-  .add-input:focus{border-color:var(--accent)}
-  .add-input::placeholder{color:var(--text2)}
-  .add-btn{background:var(--green);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:14px;font-weight:600;cursor:pointer}
-  .add-btn:active{opacity:.8}
-  .saving{font-size:11px;color:var(--accent);text-align:center;margin-top:6px;min-height:16px}
+/* Countdown */
+.cd-item{display:flex;align-items:center;gap:10px;padding:9px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;font-size:13px}
+.cd-item.soon{border-color:var(--gold);background:rgba(245,182,62,.05)}
+.cd-item.imm{border-color:var(--rose);background:rgba(252,165,165,.05)}
+.cd-item.passed{opacity:.3}
+.cd-e{font-size:16px;flex-shrink:0}
+.cd-l{flex:1}.cd-n{font-size:11px;color:var(--text2)}
+.cd-d{font-weight:700;font-size:14px;white-space:nowrap;min-width:55px;text-align:right}
 
-  /* Progress */
-  .pstrip{display:flex;align-items:center;gap:10px;margin:10px 0 14px}
-  .pbar-o{flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden}
-  .pbar-i{height:100%;background:linear-gradient(90deg,var(--green),var(--accent));border-radius:4px;transition:width .4s}
-  .plabel{font-size:13px;font-weight:600;color:var(--text2);min-width:45px;text-align:right}
+/* Daily */
+.daily{background:var(--card);border:1.5px solid var(--mint);border-radius:14px;padding:14px 16px;margin:14px 0}
+.daily-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.daily-head h2{font-size:15px;flex:1;color:var(--mint)}
+.daily-head .hint{font-size:11px;color:var(--text2)}
+.dtask{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--glass)}
+.dtask:last-of-type{border-bottom:none}
+.dchk{width:22px;height:22px;border:2px solid var(--border);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+.dchk:active{transform:scale(.88)}
+.dchk.on{background:var(--mint);border-color:var(--mint)}
+.dchk.on::after{content:"✓";color:var(--bg);font-size:12px;font-weight:700}
+.dtask.on .dl{text-decoration:line-through;color:var(--text2)}
+.dl{font-size:14px;flex:1}
+.ddel{font-size:16px;color:var(--text2);cursor:pointer;padding:0 4px;opacity:.3}
+.ddel:active{opacity:1}
+.add-row{display:flex;gap:8px;margin-top:10px}
+.add-inp{flex:1;background:var(--glass);border:1px solid var(--border);border-radius:20px;padding:8px 14px;color:var(--text);font-size:13px;outline:none}
+.add-inp:focus{border-color:var(--gold)}
+.add-inp::placeholder{color:var(--text2)}
+.add-btn{background:var(--mint);color:var(--bg);border:none;border-radius:50%;width:36px;height:36px;font-size:18px;font-weight:700;cursor:pointer}
+.add-btn:active{opacity:.8}
+.saving{font-size:11px;color:var(--gold);text-align:center;margin-top:4px;min-height:14px}
 
-  /* Collapsible panels */
-  .panel{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;overflow:hidden}
-  .panel.active{border-color:var(--green)}
-  .panel-h{display:flex;align-items:center;gap:8px;padding:13px 16px;cursor:pointer;-webkit-user-select:none;user-select:none}
-  .panel-h:active{background:rgba(255,255,255,.02)}
-  .panel-h .t{font-size:14px;font-weight:600;flex:1}
-  .panel-h .badge{font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(255,255,255,.06);color:var(--text2)}
-  .panel-h .badge.now{background:rgba(63,185,80,.15);color:var(--green)}
-  .panel-h .arr{font-size:11px;color:var(--text2);transition:transform .2s}
-  .panel.open .panel-h .arr{transform:rotate(90deg)}
-  .panel-b{display:none;padding:0 16px 14px}
-  .panel.open .panel-b{display:block}
-  .pmini{font-size:12px;color:var(--text2);margin-bottom:6px}
+/* Progress */
+.pstrip{display:flex;align-items:center;gap:10px;margin:12px 0}
+.pbar-o{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.pbar-i{height:100%;background:linear-gradient(90deg,var(--gold),var(--bread));border-radius:3px;transition:width .4s}
+.plabel{font-size:13px;font-weight:600;color:var(--bread);min-width:40px;text-align:right}
 
-  .task{display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:13px}
-  .chk{flex-shrink:0;width:16px;height:16px;border:2px solid var(--border);border-radius:3px;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:10px}
-  .task.done .chk{background:var(--green);border-color:var(--green)}
-  .task.done .chk::after{content:"✓";color:#fff;font-weight:700}
-  .task.done .lbl{text-decoration:line-through;color:var(--text2)}
-  .task.urg .lbl{color:var(--red);font-weight:500}
+/* Active phase (always visible) */
+.active-phase{background:var(--card);border:1.5px solid var(--gold);border-radius:14px;padding:16px;margin:10px 0}
+.ap-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.ap-head .t{font-size:15px;font-weight:600;flex:1}
+.ap-head .now{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(245,182,62,.12);color:var(--gold)}
+.task{display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:13px}
+.chk{flex-shrink:0;width:16px;height:16px;border:2px solid var(--border);border-radius:3px;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:10px}
+.task.done .chk{background:var(--mint);border-color:var(--mint)}
+.task.done .chk::after{content:"✓";color:var(--bg);font-weight:700}
+.task.done .lbl{text-decoration:line-through;color:var(--text2)}
+.task.urg .lbl{color:var(--rose);font-weight:500}
+.pmini{font-size:12px;color:var(--text2);margin-bottom:6px}
 
-  .trow{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:13px}
-  .trow .v{font-weight:600;color:var(--accent)}
-  .ms{display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px}
-  .ms .dot{width:7px;height:7px;border-radius:50%;background:var(--border);flex-shrink:0}
-  .ms.done .dot{background:var(--green)}
-  .ms.done{color:var(--text2);text-decoration:line-through}
-  .sgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-  .sitem{background:rgba(255,255,255,.04);padding:7px 10px;border-radius:7px;font-size:12px}
-  .sitem .sl{color:var(--text2);font-size:10px}
-  .sitem .sv{font-weight:600}
-  .park{padding:7px 10px;background:rgba(188,140,255,.08);border-left:3px solid var(--purple);border-radius:0 7px 7px 0;margin-bottom:5px;font-size:12px}
-  .park-empty{font-size:12px;color:var(--text2);font-style:italic}
-  .anchors{display:flex;flex-wrap:wrap;gap:5px}
-  .atag{font-size:11px;background:rgba(63,185,80,.1);color:var(--green);padding:3px 9px;border-radius:10px}
-  .footer{text-align:center;padding:16px 0;font-size:11px;color:var(--text2)}
+/* Directory fold */
+.dir{background:var(--card);border:1px solid var(--border);border-radius:14px;margin:10px 0;overflow:hidden}
+.dir-toggle{display:flex;align-items:center;gap:8px;padding:13px 16px;cursor:pointer;-webkit-user-select:none;user-select:none}
+.dir-toggle:active{background:var(--glass)}
+.dir-toggle .t{font-size:14px;font-weight:600;flex:1;color:var(--bread)}
+.dir-toggle .arr{font-size:11px;color:var(--text2);transition:transform .2s}
+.dir.open .dir-toggle .arr{transform:rotate(90deg)}
+.dir-body{display:none}
+.dir.open .dir-body{display:block}
 
-  /* Setup */
-  .setup{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin:14px 0;text-align:center}
-  .setup p{font-size:13px;color:var(--text2);margin-bottom:10px}
-  .setup input{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;padding:10px;color:var(--text);font-size:13px;margin-bottom:8px;outline:none}
-  .setup button{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:14px;cursor:pointer}
-  .loading{text-align:center;padding:60px 20px;font-size:16px;color:var(--text2)}
+/* Sections inside directory */
+.sec{border-top:1px solid var(--glass);padding:12px 16px}
+.sec-h{display:flex;align-items:center;gap:8px;cursor:pointer;-webkit-user-select:none;user-select:none}
+.sec-h:active{opacity:.7}
+.sec-h .t{font-size:13px;font-weight:600;flex:1}
+.sec-h .sub{font-size:11px;color:var(--text2)}
+.sec-h .arr{font-size:10px;color:var(--text2);transition:transform .2s}
+.sec.open .sec-h .arr{transform:rotate(90deg)}
+.sec-b{display:none;padding-top:8px}
+.sec.open .sec-b{display:block}
+
+.trow{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:12px}
+.trow .v{font-weight:600;color:var(--gold)}
+.ms{display:flex;align-items:center;gap:6px;padding:2px 0;font-size:12px}
+.ms .dot{width:6px;height:6px;border-radius:50%;background:var(--border);flex-shrink:0}
+.ms.done .dot{background:var(--mint)}.ms.done{color:var(--text2);text-decoration:line-through}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.sitem{background:var(--glass);padding:6px 10px;border-radius:8px;font-size:12px}
+.sitem .sl{color:var(--text2);font-size:10px}.sitem .sv{font-weight:600}
+.park{padding:6px 10px;background:rgba(196,181,253,.08);border-left:3px solid var(--lav);border-radius:0 8px 8px 0;margin-bottom:4px;font-size:12px}
+.park-empty{font-size:12px;color:var(--text2);font-style:italic}
+
+.footer{text-align:center;padding:16px 0;font-size:11px;color:var(--text2)}
+.setup{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin:14px 0;text-align:center}
+.setup p{font-size:12px;color:var(--text2);margin-bottom:10px}
+.setup input{width:100%;background:var(--glass);border:1px solid var(--border);border-radius:20px;padding:10px 14px;color:var(--text);font-size:13px;margin-bottom:8px;outline:none}
+.setup button{background:var(--gold);color:var(--bg);border:none;border-radius:20px;padding:8px 24px;font-size:14px;font-weight:600;cursor:pointer}
+.loading{text-align:center;padding:60px 20px;font-size:16px;color:var(--text2)}
 </style>
 </head>
 <body>
@@ -103,23 +120,14 @@
 <script>
 const REPO='mianbaomaogongzhu/-';
 const API=`https://api.github.com/repos/${REPO}/contents/data.json`;
-let DATA=null, SHA=null, SAVING=false;
+let DATA=null,SHA=null,SAVING=false;
 
 function getToken(){return localStorage.getItem('gh_token_bread')}
 function setToken(t){localStorage.setItem('gh_token_bread',t)}
-
 function today(){return new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Tokyo'})}
 function todayLabel(){return new Date().toLocaleDateString('zh-CN',{timeZone:'Asia/Tokyo',year:'numeric',month:'long',day:'numeric',weekday:'long'})}
-function daysTo(ds){
-  const t=new Date(ds+'T00:00:00+09:00');
-  const n=new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Tokyo'}));
-  n.setHours(0,0,0,0);
-  return Math.ceil((t-n)/864e5);
-}
-function isCurrent(p){
-  const n=new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Tokyo'}));n.setHours(0,0,0,0);
-  return n>=new Date(p.start_date+'T00:00:00+09:00')&&n<=new Date(p.end_date+'T23:59:59+09:00');
-}
+function daysTo(ds){const t=new Date(ds+'T00:00:00+09:00');const n=new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Tokyo'}));n.setHours(0,0,0,0);return Math.ceil((t-n)/864e5)}
+function isCur(p){const n=new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Tokyo'}));n.setHours(0,0,0,0);return n>=new Date(p.start_date+'T00:00:00+09:00')&&n<=new Date(p.end_date+'T23:59:59+09:00')}
 
 async function readData(){
   const r=await fetch(`https://raw.githubusercontent.com/${REPO}/main/data.json?t=${Date.now()}`);
@@ -127,127 +135,94 @@ async function readData(){
   if(getToken()){try{const a=await fetch(API,{headers:{'Authorization':'Bearer '+getToken()}});const aj=await a.json();SHA=aj.sha;}catch(e){}}
   return DATA;
 }
-
 async function writeData(msg){
-  if(SAVING||!getToken())return false;
-  SAVING=true;
-  showSaving(true);
+  if(SAVING||!getToken())return false;SAVING=true;showSaving(true);
   try{
-    const gr=await fetch(API,{headers:{'Authorization':'Bearer '+getToken()}});
-    const gj=await gr.json();SHA=gj.sha;
+    const gr=await fetch(API,{headers:{'Authorization':'Bearer '+getToken()}});const gj=await gr.json();SHA=gj.sha;
     DATA.meta.last_updated=today();DATA.meta.updated_by='星星';
-    const jsonStr=JSON.stringify(DATA,null,2);const bytes=new TextEncoder().encode(jsonStr);let bin='';bytes.forEach(b=>bin+=String.fromCharCode(b));const c=btoa(bin);
+    const j=JSON.stringify(DATA,null,2);const b=new TextEncoder().encode(j);let s='';b.forEach(x=>s+=String.fromCharCode(x));const c=btoa(s);
     const r=await fetch(API,{method:'PUT',headers:{'Authorization':'Bearer '+getToken(),'Content-Type':'application/json'},body:JSON.stringify({message:msg,content:c,sha:SHA})});
     SAVING=false;showSaving(false);return r.ok;
   }catch(e){SAVING=false;showSaving(false);return false;}
 }
-
-function showSaving(on){const el=document.getElementById('save-status');if(el)el.textContent=on?'保存中...':'';}
-
+function showSaving(on){const el=document.getElementById('ss');if(el)el.textContent=on?'保存中…':'';}
 function resetDaily(){
   if(!DATA.daily_tasks)DATA.daily_tasks={date:today(),tasks:[]};
-  if(DATA.daily_tasks.date!==today()){
-    DATA.daily_tasks.date=today();
-    DATA.daily_tasks.tasks=DATA.daily_tasks.tasks.filter(t=>t.recurring);
-    DATA.daily_tasks.tasks.forEach(t=>t.done=false);
-    return true;
-  }
+  if(DATA.daily_tasks.date!==today()){DATA.daily_tasks.date=today();DATA.daily_tasks.tasks=DATA.daily_tasks.tasks.filter(t=>t.recurring);DATA.daily_tasks.tasks.forEach(t=>t.done=false);return true;}
   return false;
 }
-
-async function toggleDaily(id){
-  const t=DATA.daily_tasks.tasks.find(x=>x.id===id);
-  if(!t)return;
-  t.done=!t.done;
-  render(DATA);
-  await writeData(t.done?'✅ '+t.text:'↩️ 取消: '+t.text);
-}
-
-async function addTask(){
-  const inp=document.getElementById('new-task');
-  const txt=inp.value.trim();
-  if(!txt)return;
-  const id='dt'+Date.now();
-  DATA.daily_tasks.tasks.push({id,text:txt,done:false,recurring:false});
-  inp.value='';
-  render(DATA);
-  await writeData('➕ '+txt);
-}
-
-async function delTask(id){
-  DATA.daily_tasks.tasks=DATA.daily_tasks.tasks.filter(t=>t.id!==id);
-  render(DATA);
-  await writeData('🗑️ 删除任务');
-}
-
-function togglePanel(el){el.classList.toggle('open')}
+async function toggleDaily(id){const t=DATA.daily_tasks.tasks.find(x=>x.id===id);if(!t)return;t.done=!t.done;render(DATA);await writeData(t.done?'✅ '+t.text:'↩️ '+t.text);}
+async function addTask(){const inp=document.getElementById('newtask');const txt=inp.value.trim();if(!txt)return;DATA.daily_tasks.tasks.push({id:'dt'+Date.now(),text:txt,done:false,recurring:false});inp.value='';render(DATA);await writeData('➕ '+txt);}
+async function delTask(id){DATA.daily_tasks.tasks=DATA.daily_tasks.tasks.filter(t=>t.id!==id);render(DATA);await writeData('🗑️ 删除');}
+function tog(el){el.classList.toggle('open')}
 
 function render(d){
   const app=document.getElementById('app');
   const allT=d.phases.flatMap(p=>p.tasks);
   const doneC=allT.filter(t=>t.done).length,totalC=allT.length;
   const pct=totalC?Math.round(doneC/totalC*100):0;
+  const curPhase=d.phases.find(p=>isCur(p))||d.phases[0];
+  const otherPhases=d.phases.filter(p=>p!==curPhase);
   let h='';
 
   // Header
-  h+='<div class="header"><h1>🍞👑 面包猫作战面板</h1><div class="today">'+todayLabel()+'</div></div>';
+  h+='<div class="head"><h1>🍞👑 面包猫公主作战面板</h1><div class="day">'+todayLabel()+'</div></div>';
 
-  // Countdowns
-  h+='<div class="cd">';
-  d.deadlines.forEach(dl=>{
-    const days=daysTo(dl.date);
-    if(days<-30)return;
-    let c='cd-item',dc='cd-d',lb=days+'天';
-    if(days<0){c+=' passed';dc+=' style="color:var(--text2)"';lb='已过';}
-    else if(days<=3){c+=' imm';dc+=' style="color:var(--red)"';}
-    else if(days<=14){c+=' soon';dc+=' style="color:var(--orange)"';}
-    else{dc+=' style="color:var(--green)"';}
-    h+='<div class="'+c+'"><span class="cd-e">'+dl.emoji+'</span><span class="cd-l">'+dl.label+(dl.note?'<br><span class="cd-n">'+dl.note+'</span>':'')+'</span><span class="'+dc+'">'+lb+'</span></div>';
-  });
+  // Anchors (前置)
+  h+='<div class="anchors">';
+  d.daily_anchors.forEach(a=>{h+='<span class="atag">'+a+'</span>';});
   h+='</div>';
 
+  // Countdowns
+  d.deadlines.forEach(dl=>{
+    const days=daysTo(dl.date);if(days<-30)return;
+    let c='cd-item',col='color:var(--mint)';
+    if(days<0){c+=' passed';col='color:var(--text2)';}
+    else if(days<=3){c+=' imm';col='color:var(--rose)';}
+    else if(days<=14){c+=' soon';col='color:var(--gold)';}
+    h+='<div class="'+c+'"><span class="cd-e">'+dl.emoji+'</span><span class="cd-l">'+dl.label+(dl.note?'<br><span class="cd-n">'+dl.note+'</span>':'')+'</span><span class="cd-d" style="'+col+'">'+(days<0?'已过':days+'天')+'</span></div>';
+  });
+
   // Daily tasks
-  h+='<div class="daily"><div class="daily-head"><h2>☀️ 今日任务</h2><span class="reset-hint">每日自动刷新</span></div>';
-  if(d.daily_tasks&&d.daily_tasks.tasks){
-    d.daily_tasks.tasks.forEach(t=>{
-      const on=t.done?'on':'';
-      h+='<div class="dtask '+on+'">';
-      h+='<div class="dcheck '+on+'" onclick="event.stopPropagation();toggleDaily(\''+t.id+'\')"></div>';
-      h+='<span class="dlabel">'+t.text+'</span>';
-      if(!t.recurring)h+='<span class="ddel" onclick="event.stopPropagation();delTask(\''+t.id+'\')">×</span>';
-      h+='</div>';
-    });
-  }
-  if(getToken()){
-    h+='<div class="add-row"><input id="new-task" class="add-input" placeholder="添加今日任务…" onkeydown="if(event.key===\'Enter\')addTask()"><button class="add-btn" onclick="addTask()">+</button></div>';
-  }
-  h+='<div class="saving" id="save-status"></div></div>';
+  h+='<div class="daily"><div class="daily-head"><h2>☀️ 今日任务</h2><span class="hint">每日自动刷新</span></div>';
+  if(d.daily_tasks&&d.daily_tasks.tasks){d.daily_tasks.tasks.forEach(t=>{
+    const on=t.done?'on':'';
+    h+='<div class="dtask '+on+'"><div class="dchk '+on+'" onclick="event.stopPropagation();toggleDaily(\''+t.id+'\')"></div><span class="dl">'+t.text+'</span>';
+    if(!t.recurring)h+='<span class="ddel" onclick="event.stopPropagation();delTask(\''+t.id+'\')">×</span>';
+    h+='</div>';
+  });}
+  if(getToken())h+='<div class="add-row"><input id="newtask" class="add-inp" placeholder="添加任务…" onkeydown="if(event.key===\'Enter\')addTask()"><button class="add-btn" onclick="addTask()">+</button></div>';
+  h+='<div class="saving" id="ss"></div></div>';
 
   // Progress
   h+='<div class="pstrip"><div class="pbar-o"><div class="pbar-i" style="width:'+pct+'%"></div></div><span class="plabel">'+doneC+'/'+totalC+'</span></div>';
 
-  // Phases
-  d.phases.forEach(p=>{
+  // Active phase (展开)
+  const cpD=curPhase.tasks.filter(t=>t.done).length,cpT=curPhase.tasks.length;
+  h+='<div class="active-phase"><div class="ap-head"><span class="t">'+curPhase.title+'</span><span class="now">进行中</span></div>';
+  h+='<div class="pmini">'+cpD+'/'+cpT+' 完成</div>';
+  curPhase.tasks.forEach(t=>{
+    const tc=t.done?'task done':(t.urgent?'task urg':'task');
+    h+='<div class="'+tc+'"><div class="chk"></div><span class="lbl">'+t.text+'</span></div>';
+  });
+  h+='</div>';
+
+  // Directory fold (一整个目录)
+  h+='<div class="dir" onclick="tog(this)"><div class="dir-toggle"><span class="t">📂 其他目标与追踪</span><span class="arr">▶</span></div><div class="dir-body">';
+
+  // Other phases
+  otherPhases.forEach(p=>{
     const pD=p.tasks.filter(t=>t.done).length,pT=p.tasks.length;
-    const cur=isCurrent(p);
-    let c='panel';
-    if(cur)c+=' active open';
-    const bCls=cur?'badge now':'badge';
-    const bTxt=cur?'进行中':p.date_range;
-    h+='<div class="'+c+'" onclick="togglePanel(this)"><div class="panel-h"><span class="t">'+p.title+'</span><span class="'+bCls+'">'+bTxt+'</span><span class="arr">▶</span></div>';
-    h+='<div class="panel-b"><div class="pmini">'+pD+'/'+pT+' 完成</div>';
-    p.tasks.forEach(t=>{
-      const tc=t.done?'task done':(t.urgent?'task urg':'task');
-      h+='<div class="'+tc+'"><div class="chk"></div><span class="lbl">'+t.text+'</span></div>';
-    });
+    h+='<div class="sec" onclick="event.stopPropagation();tog(this)"><div class="sec-h"><span class="t">'+p.title+'</span><span class="sub">'+pD+'/'+pT+'</span><span class="arr">▶</span></div><div class="sec-b">';
+    p.tasks.forEach(t=>{const tc=t.done?'task done':(t.urgent?'task urg':'task');h+='<div class="'+tc+'"><div class="chk"></div><span class="lbl">'+t.text+'</span></div>';});
     h+='</div></div>';
   });
 
   // Korean
   const k=d.language_tracker.korean;
-  h+='<div class="panel" onclick="togglePanel(this)"><div class="panel-h"><span class="t">🇰🇷 韩语 · '+k.streak_days+'天🔥 '+k.vocab_count+'词</span><span class="arr">▶</span></div><div class="panel-b">';
+  h+='<div class="sec" onclick="event.stopPropagation();tog(this)"><div class="sec-h"><span class="t">🇰🇷 韩语</span><span class="sub">'+k.streak_days+'天🔥 '+k.vocab_count+'词</span><span class="arr">▶</span></div><div class="sec-b">';
   h+='<div class="trow"><span>目标</span><span class="v">'+k.target+'</span></div>';
-  h+='<div class="trow"><span>报名</span><span class="v" style="color:'+(k.registered?'var(--green)':'var(--red)')+';">'+(k.registered?'✅ 已报名':k.registration_window)+'</span></div>';
+  h+='<div class="trow"><span>报名</span><span class="v" style="color:'+(k.registered?'var(--mint)':'var(--rose)')+';">'+(k.registered?'✅ 已报名':k.registration_window)+'</span></div>';
   h+='<div class="trow"><span>每日</span><span class="v">'+k.daily_minutes_current+'分钟</span></div>';
   h+='<div class="trow"><span>词汇</span><span class="v">'+k.vocab_count+'</span></div>';
   h+='<div class="trow"><span>连续</span><span class="v">'+k.streak_days+'天🔥</span></div>';
@@ -256,7 +231,7 @@ function render(d){
 
   // IELTS
   const ie=d.language_tracker.ielts;
-  h+='<div class="panel" onclick="togglePanel(this)"><div class="panel-h"><span class="t">🇬🇧 雅思 · '+(ie.baseline_score||'待测')+'</span><span class="arr">▶</span></div><div class="panel-b">';
+  h+='<div class="sec" onclick="event.stopPropagation();tog(this)"><div class="sec-h"><span class="t">🇬🇧 雅思</span><span class="sub">'+(ie.baseline_score||'待测')+'</span><span class="arr">▶</span></div><div class="sec-b">';
   h+='<div class="trow"><span>目标</span><span class="v">'+ie.target+'</span></div>';
   h+='<div class="trow"><span>基准</span><span class="v">'+(ie.baseline_score||'待测')+'</span></div>';
   h+='<div class="trow"><span>考试</span><span class="v">'+(ie.exam_date||'待报名')+'</span></div>';
@@ -264,48 +239,36 @@ function render(d){
   h+='</div></div>';
 
   // Career
-  h+='<div class="panel" onclick="togglePanel(this)"><div class="panel-h"><span class="t">💼 职业 · '+d.career.target_city+'</span><span class="arr">▶</span></div><div class="panel-b">';
+  h+='<div class="sec" onclick="event.stopPropagation();tog(this)"><div class="sec-h"><span class="t">💼 职业</span><span class="sub">'+d.career.target_city+'</span><span class="arr">▶</span></div><div class="sec-b">';
   h+='<div class="trow"><span>Dream</span><span class="v" style="font-size:11px">'+d.career.dream_job+'</span></div>';
   d.career.portfolio_tasks.forEach(t=>{h+='<div class="task '+(t.done?'done':'')+'"><div class="chk"></div><span class="lbl">'+t.text+'</span></div>';});
   h+='</div></div>';
 
   // Game
   const g=d.game_project;
-  h+='<div class="panel" onclick="togglePanel(this)"><div class="panel-h"><span class="t">🎮 '+g.name+'</span><span class="badge">'+g.status+'</span><span class="arr">▶</span></div><div class="panel-b">';
+  h+='<div class="sec" onclick="event.stopPropagation();tog(this)"><div class="sec-h"><span class="t">🎮 '+g.name+'</span><span class="sub">'+g.status+'</span><span class="arr">▶</span></div><div class="sec-b">';
   h+='<div class="sgrid"><div class="sitem"><div class="sl">地图</div><div class="sv">'+g.spec.maps+'</div></div><div class="sitem"><div class="sl">天数</div><div class="sv">'+g.spec.days+'</div></div><div class="sitem"><div class="sl">行动点</div><div class="sv">'+g.spec.action_points+'</div></div><div class="sitem"><div class="sl">NPC</div><div class="sv">'+g.spec.npcs+'</div></div><div class="sitem"><div class="sl">事件</div><div class="sv">'+g.spec.events+'</div></div><div class="sitem"><div class="sl">结局</div><div class="sv">'+g.spec.endings+'</div></div></div>';
   h+='</div></div>';
 
   // Parking
-  h+='<div class="panel" onclick="togglePanel(this)"><div class="panel-h"><span class="t">🅿️ 灵感停车场 · '+d.inspiration_parking.length+'条</span><span class="arr">▶</span></div><div class="panel-b">';
+  h+='<div class="sec" onclick="event.stopPropagation();tog(this)"><div class="sec-h"><span class="t">🅿️ 灵感停车场</span><span class="sub">'+d.inspiration_parking.length+'条</span><span class="arr">▶</span></div><div class="sec-b">';
   if(!d.inspiration_parking.length)h+='<div class="park-empty">扔给小苏一句话就行喵</div>';
   else d.inspiration_parking.forEach(i=>{h+='<div class="park">'+i.text+' <span style="color:var(--text2);font-size:10px">'+(i.date||'')+'</span></div>';});
   h+='</div></div>';
 
-  // Anchors
-  h+='<div class="panel open"><div class="panel-h"><span class="t">⚓ 每日锚点</span></div><div class="panel-b"><div class="anchors">';
-  d.daily_anchors.forEach(a=>{h+='<span class="atag">'+a+'</span>';});
-  h+='</div></div></div>';
+  h+='</div></div>'; // close dir-body and dir
 
   // Footer
   h+='<div class="footer">🍞 小苏 × 可颂喵公主<br>'+d.meta.last_updated+' · '+d.meta.updated_by+'</div>';
 
-  // Token setup if missing
-  if(!getToken()){
-    h+='<div class="setup"><p>首次使用：输入令牌启用打勾功能</p><input id="tk-input" type="password" placeholder="粘贴GitHub token…"><br><button onclick="setToken(document.getElementById(\'tk-input\').value);location.reload();">启用</button></div>';
-  }
+  if(!getToken())h+='<div class="setup"><p>首次使用：输入令牌启用打勾功能</p><input id="tk" type="password" placeholder="粘贴 GitHub token…"><br><button onclick="setToken(document.getElementById(\'tk\').value);location.reload();">启用</button></div>';
 
   app.innerHTML=h;app.className='';
 }
 
 async function init(){
-  try{
-    await readData();
-    const needWrite=resetDaily();
-    render(DATA);
-    if(needWrite&&getToken())await writeData('🌅 新的一天');
-  }catch(e){
-    document.getElementById('app').innerHTML='<div style="text-align:center;padding:40px;color:var(--red)">加载失败喵😿<br><small>刷新试试</small></div>';
-  }
+  try{await readData();const nr=resetDaily();render(DATA);if(nr&&getToken())await writeData('🌅 新的一天');}
+  catch(e){document.getElementById('app').innerHTML='<div style="text-align:center;padding:40px;color:var(--rose)">加载失败喵😿<br><small>刷新试试</small></div>';}
 }
 init();
 </script>
