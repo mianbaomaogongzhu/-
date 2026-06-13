@@ -28,47 +28,53 @@
     margin: 0 auto;
     line-height: 1.6;
   }
-  .header {
-    text-align: center;
-    padding: 24px 0 20px;
-  }
-  .header h1 {
-    font-size: 22px;
-    margin-bottom: 4px;
-  }
-  .header .subtitle {
-    font-size: 13px;
-    color: var(--text2);
-  }
-  .meta-bar {
+  .header { text-align: center; padding: 24px 0 8px; }
+  .header h1 { font-size: 22px; margin-bottom: 4px; }
+  .header .today { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+  /* Countdown */
+  .countdowns { margin: 16px 0; }
+  .cd-item {
     display: flex;
-    justify-content: space-between;
-    font-size: 11px;
-    color: var(--text2);
-    padding: 8px 12px;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
     background: var(--card);
-    border-radius: 8px;
-    margin-bottom: 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    font-size: 14px;
   }
-  .progress-ring {
-    text-align: center;
-    padding: 20px 0;
-  }
-  .progress-ring .big-num {
-    font-size: 48px;
+  .cd-item.soon { border-color: var(--orange); }
+  .cd-item.imminent { border-color: var(--red); background: rgba(248,81,73,0.06); }
+  .cd-item.passed { opacity: 0.4; }
+  .cd-emoji { font-size: 18px; flex-shrink: 0; }
+  .cd-label { flex: 1; }
+  .cd-note { font-size: 11px; color: var(--text2); }
+  .cd-days {
     font-weight: 700;
-    color: var(--green);
+    font-size: 15px;
+    white-space: nowrap;
+    min-width: 60px;
+    text-align: right;
   }
-  .progress-ring .big-label {
-    font-size: 13px;
-    color: var(--text2);
+  .cd-days.red { color: var(--red); }
+  .cd-days.orange { color: var(--orange); }
+  .cd-days.green { color: var(--green); }
+  .cd-days.grey { color: var(--text2); }
+
+  /* Progress */
+  .progress-strip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 16px 0;
   }
   .progress-bar-outer {
-    width: 100%;
+    flex: 1;
     height: 8px;
     background: var(--border);
     border-radius: 4px;
-    margin: 8px 0 20px;
     overflow: hidden;
   }
   .progress-bar-inner {
@@ -77,35 +83,67 @@
     border-radius: 4px;
     transition: width 0.5s;
   }
+  .progress-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text2);
+    min-width: 50px;
+    text-align: right;
+  }
+
+  /* Phase */
   .phase {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
   }
   .phase.active { border-color: var(--green); }
-  .phase.urgent { border-color: var(--red); }
+  .phase.completed { border-color: var(--border); opacity: 0.7; }
   .phase-header {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
   }
-  .phase-header .emoji { font-size: 20px; }
+  .phase-header:active { background: rgba(255,255,255,0.03); }
+  .phase-header .emoji { font-size: 18px; }
   .phase-header .title { font-size: 15px; font-weight: 600; flex: 1; }
-  .phase-header .date {
+  .phase-header .badge {
     font-size: 11px;
-    color: var(--text2);
-    background: rgba(255,255,255,0.06);
     padding: 2px 8px;
     border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    color: var(--text2);
   }
-  .phase-progress {
+  .phase-header .badge.now {
+    background: rgba(63,185,80,0.15);
+    color: var(--green);
+  }
+  .phase-header .arrow {
     font-size: 12px;
     color: var(--text2);
-    margin-bottom: 8px;
+    transition: transform 0.2s;
   }
+  .phase.open .phase-header .arrow { transform: rotate(90deg); }
+  .phase-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .phase.open .phase-body { max-height: 800px; }
+  .phase-body-inner { padding: 0 16px 14px; }
+  .phase-progress-mini {
+    font-size: 12px;
+    color: var(--text2);
+    margin-bottom: 6px;
+  }
+
+  /* Tasks */
   .task {
     display: flex;
     align-items: flex-start;
@@ -125,53 +163,54 @@
     justify-content: center;
     font-size: 12px;
   }
-  .task.done .check {
-    background: var(--green);
-    border-color: var(--green);
-  }
+  .task.done .check { background: var(--green); border-color: var(--green); }
   .task.done .check::after { content: "✓"; color: #fff; font-weight: 700; }
   .task.done .label { text-decoration: line-through; color: var(--text2); }
   .task.urgent .label { color: var(--red); font-weight: 500; }
 
+  /* Sections */
   .section {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 12px;
-  }
-  .section-title {
-    font-size: 15px;
-    font-weight: 600;
     margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .section-header {
     display: flex;
     align-items: center;
     gap: 8px;
+    padding: 14px 16px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
   }
+  .section-header:active { background: rgba(255,255,255,0.03); }
+  .section-header .title { font-size: 15px; font-weight: 600; flex: 1; }
+  .section-header .arrow { font-size: 12px; color: var(--text2); transition: transform 0.2s; }
+  .section.open .section-header .arrow { transform: rotate(90deg); }
+  .section-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+  .section.open .section-body { max-height: 800px; }
+  .section-body-inner { padding: 0 16px 14px; }
+
   .tracker-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 6px 0;
+    padding: 5px 0;
     font-size: 13px;
   }
-  .tracker-row .val {
-    font-weight: 600;
-    color: var(--accent);
-  }
+  .tracker-row .val { font-weight: 600; color: var(--accent); }
   .milestone {
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 4px 0;
+    padding: 3px 0;
     font-size: 13px;
   }
   .milestone .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--border);
-    flex-shrink: 0;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--border); flex-shrink: 0;
   }
   .milestone.done .dot { background: var(--green); }
   .milestone.done { color: var(--text2); text-decoration: line-through; }
@@ -198,17 +237,9 @@
     margin-bottom: 6px;
     font-size: 13px;
   }
-  .parking-empty {
-    font-size: 13px;
-    color: var(--text2);
-    font-style: italic;
-  }
+  .parking-empty { font-size: 13px; color: var(--text2); font-style: italic; }
 
-  .anchors {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
+  .anchors { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 16px 14px; }
   .anchor-tag {
     font-size: 12px;
     background: rgba(63,185,80,0.1);
@@ -223,36 +254,53 @@
     font-size: 12px;
     color: var(--text2);
   }
-  .error-msg {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--red);
-  }
-  .loading {
-    text-align: center;
-    padding: 60px 20px;
-    font-size: 16px;
-    color: var(--text2);
-  }
+  .loading { text-align: center; padding: 60px 20px; font-size: 16px; color: var(--text2); }
+  .error-msg { text-align: center; padding: 40px 20px; color: var(--red); }
 </style>
 </head>
 <body>
-
 <div id="app" class="loading">🍞 面包烤制中...</div>
-
 <script>
 const DATA_URL = 'https://raw.githubusercontent.com/mianbaomaogongzhu/-/main/data.json';
 
+function daysUntil(dateStr) {
+  const t = new Date(dateStr + 'T00:00:00+09:00');
+  const now = new Date(new Date().toLocaleString('en-US', {timeZone:'Asia/Tokyo'}));
+  now.setHours(0,0,0,0);
+  return Math.ceil((t - now) / 86400000);
+}
+
+function todayStr() {
+  return new Date().toLocaleDateString('zh-CN', {timeZone:'Asia/Tokyo', year:'numeric', month:'long', day:'numeric', weekday:'long'});
+}
+
+function isCurrentPhase(p) {
+  const now = new Date(new Date().toLocaleString('en-US', {timeZone:'Asia/Tokyo'}));
+  now.setHours(0,0,0,0);
+  const s = new Date(p.start_date + 'T00:00:00+09:00');
+  const e = new Date(p.end_date + 'T23:59:59+09:00');
+  return now >= s && now <= e;
+}
+
+function isPastPhase(p) {
+  const now = new Date(new Date().toLocaleString('en-US', {timeZone:'Asia/Tokyo'}));
+  now.setHours(0,0,0,0);
+  const e = new Date(p.end_date + 'T23:59:59+09:00');
+  return now > e;
+}
+
 async function load() {
-  const app = document.getElementById('app');
   try {
     const r = await fetch(DATA_URL + '?t=' + Date.now());
-    if (!r.ok) throw new Error('fetch failed');
-    const d = await r.json();
-    render(d);
+    if (!r.ok) throw new Error();
+    render(await r.json());
   } catch(e) {
-    app.innerHTML = '<div class="error-msg">加载失败喵😿<br><small>请检查网络或稍后刷新</small></div>';
+    document.getElementById('app').innerHTML = '<div class="error-msg">加载失败喵😿<br><small>刷新试试</small></div>';
   }
+}
+
+function toggle(el) {
+  el.classList.toggle('open');
 }
 
 function render(d) {
@@ -261,125 +309,142 @@ function render(d) {
   const doneCount = allTasks.filter(t => t.done).length;
   const totalCount = allTasks.length;
   const pct = totalCount ? Math.round(doneCount / totalCount * 100) : 0;
-
   let html = '';
 
   // Header
-  html += `<div class="header">
-    <h1>🍞👑 面包猫公主作战面板</h1>
-    <div class="subtitle">${d.meta.current_period}</div>
-  </div>`;
+  html += '<div class="header"><h1>🍞👑 面包猫公主作战面板</h1>';
+  html += '<div class="today">' + todayStr() + '</div></div>';
 
-  // Meta bar
-  html += `<div class="meta-bar">
-    <span>更新：${d.meta.last_updated}</span>
-    <span>by ${d.meta.updated_by}</span>
-  </div>`;
-
-  // Progress ring
-  html += `<div class="progress-ring">
-    <div class="big-num">${pct}%</div>
-    <div class="big-label">${doneCount} / ${totalCount} 任务完成</div>
-  </div>
-  <div class="progress-bar-outer"><div class="progress-bar-inner" style="width:${pct}%"></div></div>`;
-
-  // Phases
-  d.phases.forEach(p => {
-    const pDone = p.tasks.filter(t => t.done).length;
-    const pTotal = p.tasks.length;
-    const cls = p.status === 'active' ? 'phase active' : 'phase';
-    html += `<div class="${cls}">
-      <div class="phase-header">
-        <span class="emoji">${p.emoji}</span>
-        <span class="title">${p.title}</span>
-        <span class="date">${p.date_range}</span>
-      </div>
-      <div class="phase-progress">${pDone}/${pTotal} 完成</div>`;
-    p.tasks.forEach(t => {
-      const tcls = t.done ? 'task done' : (t.urgent ? 'task urgent' : 'task');
-      html += `<div class="${tcls}"><div class="check"></div><span class="label">${t.text}</span></div>`;
-    });
+  // Countdowns
+  html += '<div class="countdowns">';
+  d.deadlines.forEach(dl => {
+    const days = daysUntil(dl.date);
+    if (days < -30) return;
+    let cls = 'cd-item';
+    let dCls = 'cd-days green';
+    let label = days + '天';
+    if (days < 0) { cls += ' passed'; dCls = 'cd-days grey'; label = '已过'; }
+    else if (days <= 3) { cls += ' imminent'; dCls = 'cd-days red'; }
+    else if (days <= 14) { cls += ' soon'; dCls = 'cd-days orange'; }
+    html += '<div class="' + cls + '">';
+    html += '<span class="cd-emoji">' + dl.emoji + '</span>';
+    html += '<span class="cd-label">' + dl.label + (dl.note ? '<br><span class="cd-note">' + dl.note + '</span>' : '') + '</span>';
+    html += '<span class="' + dCls + '">' + label + '</span>';
     html += '</div>';
   });
+  html += '</div>';
 
-  // Korean tracker
+  // Progress strip
+  html += '<div class="progress-strip">';
+  html += '<div class="progress-bar-outer"><div class="progress-bar-inner" style="width:' + pct + '%"></div></div>';
+  html += '<span class="progress-label">' + doneCount + '/' + totalCount + '</span>';
+  html += '</div>';
+
+  // Phases
+  d.phases.forEach((p, i) => {
+    const pDone = p.tasks.filter(t => t.done).length;
+    const pTotal = p.tasks.length;
+    const current = isCurrentPhase(p);
+    const past = isPastPhase(p);
+    let cls = 'phase';
+    if (current) cls += ' active open';
+    if (past && pDone === pTotal) cls += ' completed';
+    const badgeCls = current ? 'badge now' : 'badge';
+    const badgeText = current ? '进行中' : p.date_range;
+
+    html += '<div class="' + cls + '" onclick="toggle(this)">';
+    html += '<div class="phase-header">';
+    html += '<span class="emoji">' + p.emoji + '</span>';
+    html += '<span class="title">' + p.title + '</span>';
+    html += '<span class="' + badgeCls + '">' + badgeText + '</span>';
+    html += '<span class="arrow">▶</span>';
+    html += '</div>';
+    html += '<div class="phase-body"><div class="phase-body-inner">';
+    html += '<div class="phase-progress-mini">' + pDone + '/' + pTotal + ' 完成</div>';
+    p.tasks.forEach(t => {
+      const tcls = t.done ? 'task done' : (t.urgent ? 'task urgent' : 'task');
+      html += '<div class="' + tcls + '"><div class="check"></div><span class="label">' + t.text + '</span></div>';
+    });
+    html += '</div></div></div>';
+  });
+
+  // Language trackers (collapsed by default)
   const k = d.language_tracker.korean;
-  html += `<div class="section">
-    <div class="section-title">🇰🇷 韩语 TOPIK I</div>
-    <div class="tracker-row"><span>目标</span><span class="val">${k.target}</span></div>
-    <div class="tracker-row"><span>报名窗口</span><span class="val" style="color:${k.registered?'var(--green)':'var(--red)'};">${k.registered?'✅ 已报名':k.registration_window}</span></div>
-    <div class="tracker-row"><span>每日时长</span><span class="val">${k.daily_minutes_current}分钟</span></div>
-    <div class="tracker-row"><span>词汇量</span><span class="val">${k.vocab_count}</span></div>
-    <div class="tracker-row"><span>连续天数</span><span class="val">${k.streak_days}天 🔥</span></div>
-    <div style="margin-top:8px;">`;
+  html += '<div class="section" onclick="toggle(this)">';
+  html += '<div class="section-header"><span>🇰🇷</span><span class="title">韩语 TOPIK I · ' + k.streak_days + '天🔥 ' + k.vocab_count + '词</span><span class="arrow">▶</span></div>';
+  html += '<div class="section-body"><div class="section-body-inner">';
+  html += '<div class="tracker-row"><span>目标</span><span class="val">' + k.target + '</span></div>';
+  html += '<div class="tracker-row"><span>报名</span><span class="val" style="color:' + (k.registered ? 'var(--green)' : 'var(--red)') + ';">' + (k.registered ? '✅ 已报名' : k.registration_window) + '</span></div>';
+  html += '<div class="tracker-row"><span>每日时长</span><span class="val">' + k.daily_minutes_current + '分钟</span></div>';
+  html += '<div class="tracker-row"><span>词汇量</span><span class="val">' + k.vocab_count + '</span></div>';
+  html += '<div class="tracker-row"><span>连续天数</span><span class="val">' + k.streak_days + '天 🔥</span></div>';
+  html += '<div style="margin-top:6px;">';
   k.milestones.forEach(m => {
-    html += `<div class="milestone ${m.done?'done':''}"><div class="dot"></div><span>${m.label}</span></div>`;
+    html += '<div class="milestone ' + (m.done ? 'done' : '') + '"><div class="dot"></div><span>' + m.label + '</span></div>';
   });
-  html += '</div></div>';
+  html += '</div></div></div></div>';
 
-  // IELTS tracker
   const ie = d.language_tracker.ielts;
-  html += `<div class="section">
-    <div class="section-title">🇬🇧 雅思 IELTS</div>
-    <div class="tracker-row"><span>目标</span><span class="val">${ie.target}</span></div>
-    <div class="tracker-row"><span>基准分</span><span class="val">${ie.baseline_score || '待测'}</span></div>
-    <div class="tracker-row"><span>考试日期</span><span class="val">${ie.exam_date || '待报名'}</span></div>
-    <div style="margin-top:8px;">`;
+  html += '<div class="section" onclick="toggle(this)">';
+  html += '<div class="section-header"><span>🇬🇧</span><span class="title">雅思 IELTS · ' + (ie.baseline_score || '待测') + '</span><span class="arrow">▶</span></div>';
+  html += '<div class="section-body"><div class="section-body-inner">';
+  html += '<div class="tracker-row"><span>目标</span><span class="val">' + ie.target + '</span></div>';
+  html += '<div class="tracker-row"><span>基准分</span><span class="val">' + (ie.baseline_score || '待测') + '</span></div>';
+  html += '<div class="tracker-row"><span>考试日期</span><span class="val">' + (ie.exam_date || '待报名') + '</span></div>';
+  html += '<div style="margin-top:6px;">';
   ie.milestones.forEach(m => {
-    html += `<div class="milestone ${m.done?'done':''}"><div class="dot"></div><span>${m.label}</span></div>`;
+    html += '<div class="milestone ' + (m.done ? 'done' : '') + '"><div class="dot"></div><span>' + m.label + '</span></div>';
   });
-  html += '</div></div>';
+  html += '</div></div></div></div>';
 
-  // Career
-  html += `<div class="section">
-    <div class="section-title">💼 职业目标</div>
-    <div class="tracker-row"><span>Dream Job</span><span class="val" style="font-size:12px;">${d.career.dream_job}</span></div>
-    <div class="tracker-row"><span>目标城市</span><span class="val">${d.career.target_city}</span></div>
-    <div style="margin-top:8px;font-size:13px;font-weight:500;margin-bottom:4px;">作品集进度</div>`;
+  // Career (collapsed)
+  html += '<div class="section" onclick="toggle(this)">';
+  html += '<div class="section-header"><span>💼</span><span class="title">职业 · ' + d.career.target_city + '</span><span class="arrow">▶</span></div>';
+  html += '<div class="section-body"><div class="section-body-inner">';
+  html += '<div class="tracker-row"><span>Dream Job</span><span class="val" style="font-size:11px;">' + d.career.dream_job + '</span></div>';
+  html += '<div style="margin-top:6px;font-size:13px;font-weight:500;margin-bottom:4px;">作品集</div>';
   d.career.portfolio_tasks.forEach(t => {
     const tcls = t.done ? 'task done' : 'task';
-    html += `<div class="${tcls}"><div class="check"></div><span class="label">${t.text}</span></div>`;
+    html += '<div class="' + tcls + '"><div class="check"></div><span class="label">' + t.text + '</span></div>';
   });
-  html += '</div>';
+  html += '</div></div></div>';
 
-  // Game project
+  // Game project (collapsed)
   const g = d.game_project;
-  html += `<div class="section">
-    <div class="section-title">🎮 ${g.name}</div>
-    <div class="tracker-row"><span>状态</span><span class="val">${g.status}</span></div>
-    <div class="spec-grid" style="margin-top:8px;">
-      <div class="spec-item"><div class="spec-label">地图</div><div class="spec-val">${g.spec.maps}</div></div>
-      <div class="spec-item"><div class="spec-label">天数</div><div class="spec-val">${g.spec.days}</div></div>
-      <div class="spec-item"><div class="spec-label">行动点</div><div class="spec-val">${g.spec.action_points}</div></div>
-      <div class="spec-item"><div class="spec-label">NPC</div><div class="spec-val">${g.spec.npcs}</div></div>
-      <div class="spec-item"><div class="spec-label">事件</div><div class="spec-val">${g.spec.events}</div></div>
-      <div class="spec-item"><div class="spec-label">结局</div><div class="spec-val">${g.spec.endings}</div></div>
-    </div>
-  </div>`;
+  html += '<div class="section" onclick="toggle(this)">';
+  html += '<div class="section-header"><span>🎮</span><span class="title">' + g.name + ' · ' + g.status + '</span><span class="arrow">▶</span></div>';
+  html += '<div class="section-body"><div class="section-body-inner">';
+  html += '<div class="spec-grid">';
+  html += '<div class="spec-item"><div class="spec-label">地图</div><div class="spec-val">' + g.spec.maps + '</div></div>';
+  html += '<div class="spec-item"><div class="spec-label">天数</div><div class="spec-val">' + g.spec.days + '</div></div>';
+  html += '<div class="spec-item"><div class="spec-label">行动点</div><div class="spec-val">' + g.spec.action_points + '</div></div>';
+  html += '<div class="spec-item"><div class="spec-label">NPC</div><div class="spec-val">' + g.spec.npcs + '</div></div>';
+  html += '<div class="spec-item"><div class="spec-label">事件</div><div class="spec-val">' + g.spec.events + '</div></div>';
+  html += '<div class="spec-item"><div class="spec-label">结局</div><div class="spec-val">' + g.spec.endings + '</div></div>';
+  html += '</div></div></div></div>';
 
-  // Inspiration parking
-  html += `<div class="section">
-    <div class="section-title">🅿️ 灵感停车场</div>`;
+  // Inspiration parking (collapsed)
+  html += '<div class="section" onclick="toggle(this)">';
+  html += '<div class="section-header"><span>🅿️</span><span class="title">灵感停车场 · ' + d.inspiration_parking.length + '条</span><span class="arrow">▶</span></div>';
+  html += '<div class="section-body"><div class="section-body-inner">';
   if (d.inspiration_parking.length === 0) {
-    html += '<div class="parking-empty">还没有灵感…9月前只存一句话喵</div>';
+    html += '<div class="parking-empty">还没有灵感…扔给小苏一句话就行喵</div>';
   } else {
     d.inspiration_parking.forEach(item => {
-      html += `<div class="parking-item">${item.text} <span style="color:var(--text2);font-size:11px;">${item.date||''}</span></div>`;
+      html += '<div class="parking-item">' + item.text + ' <span style="color:var(--text2);font-size:11px;">' + (item.date || '') + '</span></div>';
     });
   }
-  html += '</div>';
+  html += '</div></div></div>';
 
-  // Daily anchors
-  html += `<div class="section">
-    <div class="section-title">⚓ 每日锚点</div>
-    <div class="anchors">`;
-  d.daily_anchors.forEach(a => {
-    html += `<span class="anchor-tag">${a}</span>`;
-  });
-  html += '</div></div>';
+  // Daily anchors (always visible, no collapse)
+  html += '<div class="section open">';
+  html += '<div class="section-header"><span>⚓</span><span class="title">每日锚点</span></div>';
+  html += '<div class="section-body" style="max-height:200px;"><div class="anchors">';
+  d.daily_anchors.forEach(a => { html += '<span class="anchor-tag">' + a + '</span>'; });
+  html += '</div></div></div>';
 
   // Footer
-  html += `<div class="footer">🍞 小苏 × 可颂喵公主 · 面包国出品<br>数据由小苏通过GitHub API更新</div>`;
+  html += '<div class="footer">🍞 小苏 × 可颂喵公主 · 面包国出品<br>上次更新：' + d.meta.last_updated + ' by ' + d.meta.updated_by + '</div>';
 
   app.innerHTML = html;
   app.className = '';
