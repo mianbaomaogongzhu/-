@@ -7,18 +7,43 @@
     "current_period": "2026年夏 · 6月–9月作战计划"
   },
   "deadlines": [
-    {"label": "TOPIK报名开始（抢！）", "date": "2026-07-06", "emoji": "🚨", "urgent": true},
-    {"label": "TOPIK报名截止", "date": "2026-07-21", "emoji": "⏰"},
-    {"label": "学期课程结束", "date": "2026-07-17", "emoji": "🏫"},
-    {"label": "雅思考试（大阪）", "date": "2026-08-29", "emoji": "🇬🇧", "note": "待报名确认"},
-    {"label": "TOPIK考试日", "date": "2026-10-18", "emoji": "🇰🇷"}
+    {
+      "label": "TOPIK报名开始（抢！）",
+      "date": "2026-07-06",
+      "emoji": "🚨",
+      "urgent": true
+    },
+    {
+      "label": "TOPIK报名截止",
+      "date": "2026-07-21",
+      "emoji": "⏰"
+    },
+    {
+      "label": "学期课程结束",
+      "date": "2026-07-17",
+      "emoji": "🏫"
+    },
+    {
+      "label": "雅思考试（大阪）",
+      "date": "2026-08-29",
+      "emoji": "🇬🇧",
+      "note": "待报名确认"
+    },
+    {
+      "label": "TOPIK考试日",
+      "date": "2026-10-18",
+      "emoji": "🇰🇷"
+    }
   ],
   "daily_tasks": {
     "date": "2026-06-13",
     "tasks": [
-      {"id": "dt1", "text": "韩语背词10-15分钟", "done": false, "recurring": true},
-      {"id": "dt2", "text": "手机进锁盒", "done": false, "recurring": true},
-      {"id": "dt3", "text": "好好吃饭", "done": false, "recurring": true}
+      {
+        "id": "dt1",
+        "text": "韩语背词10-15分钟",
+        "done": false,
+        "recurring": true
+      }
     ]
   },
   "phases": [
@@ -30,12 +55,40 @@
       "end_date": "2026-07-15",
       "status": "active",
       "tasks": [
-        {"id": "p1t1", "text": "东洋美术史 · 每周全勤到7月底", "done": false, "type": "weekly"},
-        {"id": "p1t2", "text": "西洋美术史 · 每周全勤到7月底", "done": false, "type": "weekly"},
-        {"id": "p1t3", "text": "文芸学概论 · 每周全勤到7月底", "done": false, "type": "weekly"},
-        {"id": "p1t4", "text": "确认每门课期末形式（考试/レポート）并记进日历", "done": false},
-        {"id": "p1t5", "text": "出席系统上线：前晚双闹钟 + 手机时间锁盒", "done": false},
-        {"id": "p1t6", "text": "韩语热身：每天睡前10-15分钟背词", "done": false, "type": "daily"}
+        {
+          "id": "p1t1",
+          "text": "东洋美术史 · 每周全勤到7月底",
+          "done": false,
+          "type": "weekly"
+        },
+        {
+          "id": "p1t2",
+          "text": "西洋美术史 · 每周全勤到7月底",
+          "done": false,
+          "type": "weekly"
+        },
+        {
+          "id": "p1t3",
+          "text": "文芸学概论 · 每周全勤到7月底",
+          "done": false,
+          "type": "weekly"
+        },
+        {
+          "id": "p1t4",
+          "text": "确认每门课期末形式（考试/レポート）并记进日历",
+          "done": false
+        },
+        {
+          "id": "p1t5",
+          "text": "出席系统上线：前晚双闹钟 + 手机时间锁盒",
+          "done": false
+        },
+        {
+          "id": "p1t6",
+          "text": "韩语热身：每天睡前10-15分钟背词",
+          "done": false,
+          "type": "daily"
+        }
       ]
     },
     {
@@ -46,11 +99,32 @@
       "end_date": "2026-08-05",
       "status": "upcoming",
       "tasks": [
-        {"id": "p2t1", "text": "🚨 7/6–7/21 报名10月TOPIK（先到先得！）", "done": false, "urgent": true},
-        {"id": "p2t2", "text": "提前在韩国教育财团官网注册账号", "done": false},
-        {"id": "p2t3", "text": "三门课期末全部按时交付", "done": false},
-        {"id": "p2t4", "text": "复盘本学期 → 一页「下学期选课原则」", "done": false},
-        {"id": "p2t5", "text": "跟进 teamLab 实习结果", "done": false}
+        {
+          "id": "p2t1",
+          "text": "🚨 7/6–7/21 报名10月TOPIK（先到先得！）",
+          "done": false,
+          "urgent": true
+        },
+        {
+          "id": "p2t2",
+          "text": "提前在韩国教育财团官网注册账号",
+          "done": false
+        },
+        {
+          "id": "p2t3",
+          "text": "三门课期末全部按时交付",
+          "done": false
+        },
+        {
+          "id": "p2t4",
+          "text": "复盘本学期 → 一页「下学期选课原则」",
+          "done": false
+        },
+        {
+          "id": "p2t5",
+          "text": "跟进 teamLab 实习结果",
+          "done": false
+        }
       ]
     },
     {
@@ -61,13 +135,42 @@
       "end_date": "2026-08-31",
       "status": "upcoming",
       "tasks": [
-        {"id": "p3t1", "text": "雅思定位模考一套（剑桥真题）", "done": false},
-        {"id": "p3t2", "text": "报名8月底大阪机考雅思", "done": false},
-        {"id": "p3t3", "text": "雅思集中备考4-5周（目标总分7.0）", "done": false},
-        {"id": "p3t4", "text": "韩语升档：每天30分钟", "done": false, "type": "daily"},
-        {"id": "p3t5", "text": "香港项目对比表（HKU/CUHK/HKBU等）", "done": false},
-        {"id": "p3t6", "text": "履历素材库 + 摄影小作品集整理", "done": false},
-        {"id": "p3t7", "text": "竞品叙事分析文（米哈游/鹰角/叠纸批评 → writing sample）", "done": false}
+        {
+          "id": "p3t1",
+          "text": "雅思定位模考一套（剑桥真题）",
+          "done": false
+        },
+        {
+          "id": "p3t2",
+          "text": "报名8月底大阪机考雅思",
+          "done": false
+        },
+        {
+          "id": "p3t3",
+          "text": "雅思集中备考4-5周（目标总分7.0）",
+          "done": false
+        },
+        {
+          "id": "p3t4",
+          "text": "韩语升档：每天30分钟",
+          "done": false,
+          "type": "daily"
+        },
+        {
+          "id": "p3t5",
+          "text": "香港项目对比表（HKU/CUHK/HKBU等）",
+          "done": false
+        },
+        {
+          "id": "p3t6",
+          "text": "履历素材库 + 摄影小作品集整理",
+          "done": false
+        },
+        {
+          "id": "p3t7",
+          "text": "竞品叙事分析文（米哈游/鹰角/叠纸批评 → writing sample）",
+          "done": false
+        }
       ]
     },
     {
@@ -78,12 +181,36 @@
       "end_date": "2026-09-30",
       "status": "upcoming",
       "tasks": [
-        {"id": "p4t1", "text": "考雅思 → 出分，决定是否二刷", "done": false},
-        {"id": "p4t2", "text": "韩语进入TOPIK真题模式（10/18考试）", "done": false},
-        {"id": "p4t3", "text": "按选课原则选秋学期课程", "done": false},
-        {"id": "p4t4", "text": "PS（个人陈述）故事大纲", "done": false},
-        {"id": "p4t5", "text": "开学前：课表进日历、作息校准", "done": false},
-        {"id": "p4t6", "text": "🔓 圣环短篇demo解封开工！", "done": false}
+        {
+          "id": "p4t1",
+          "text": "考雅思 → 出分，决定是否二刷",
+          "done": false
+        },
+        {
+          "id": "p4t2",
+          "text": "韩语进入TOPIK真题模式（10/18考试）",
+          "done": false
+        },
+        {
+          "id": "p4t3",
+          "text": "按选课原则选秋学期课程",
+          "done": false
+        },
+        {
+          "id": "p4t4",
+          "text": "PS（个人陈述）故事大纲",
+          "done": false
+        },
+        {
+          "id": "p4t5",
+          "text": "开学前：课表进日历、作息校准",
+          "done": false
+        },
+        {
+          "id": "p4t6",
+          "text": "🔓 圣环短篇demo解封开工！",
+          "done": false
+        }
       ]
     }
   ],
@@ -96,12 +223,30 @@
       "vocab_count": 0,
       "streak_days": 0,
       "milestones": [
-        {"label": "开始每日背词", "done": false},
-        {"label": "累计200词", "done": false},
-        {"label": "累计500词", "done": false},
-        {"label": "累计1000词", "done": false},
-        {"label": "第一套真题模考", "done": false},
-        {"label": "模考达到140分（2级线）", "done": false}
+        {
+          "label": "开始每日背词",
+          "done": false
+        },
+        {
+          "label": "累计200词",
+          "done": false
+        },
+        {
+          "label": "累计500词",
+          "done": false
+        },
+        {
+          "label": "累计1000词",
+          "done": false
+        },
+        {
+          "label": "第一套真题模考",
+          "done": false
+        },
+        {
+          "label": "模考达到140分（2级线）",
+          "done": false
+        }
       ]
     },
     "ielts": {
@@ -110,11 +255,26 @@
       "exam_registered": false,
       "exam_date": null,
       "milestones": [
-        {"label": "完成定位模考", "done": false},
-        {"label": "报名机考", "done": false},
-        {"label": "Task 1 五种图表各写2篇", "done": false},
-        {"label": "口语Part 2题库串题完成", "done": false},
-        {"label": "考试！", "done": false}
+        {
+          "label": "完成定位模考",
+          "done": false
+        },
+        {
+          "label": "报名机考",
+          "done": false
+        },
+        {
+          "label": "Task 1 五种图表各写2篇",
+          "done": false
+        },
+        {
+          "label": "口语Part 2题库串题完成",
+          "done": false
+        },
+        {
+          "label": "考试！",
+          "done": false
+        }
       ]
     }
   },
@@ -122,9 +282,21 @@
     "dream_job": "叙事设计 / 世界观策划 / IP企划 → 制作人",
     "target_city": "上海",
     "portfolio_tasks": [
-      {"id": "c1", "text": "竞品叙事分析文（米哈游/鹰角/叠纸）", "done": false},
-      {"id": "c2", "text": "圣环短篇demo完成", "done": false},
-      {"id": "c3", "text": "白瑶×叶杋 小说完结一篇", "done": false}
+      {
+        "id": "c1",
+        "text": "竞品叙事分析文（米哈游/鹰角/叠纸）",
+        "done": false
+      },
+      {
+        "id": "c2",
+        "text": "圣环短篇demo完成",
+        "done": false
+      },
+      {
+        "id": "c3",
+        "text": "白瑶×叶杋 小说完结一篇",
+        "done": false
+      }
     ]
   },
   "game_project": {
