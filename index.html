@@ -2,455 +2,314 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>🍞 面包猫公主作战面板</title>
 <style>
-  :root {
-    --bg: #0d1117;
-    --card: #161b22;
-    --border: #30363d;
-    --text: #e6edf3;
-    --text2: #8b949e;
-    --accent: #58a6ff;
-    --green: #3fb950;
-    --orange: #d29922;
-    --red: #f85149;
-    --purple: #bc8cff;
-    --pink: #f778ba;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, 'Helvetica Neue', 'Segoe UI', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    padding: 16px;
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.6;
-  }
-  .header { text-align: center; padding: 24px 0 8px; }
-  .header h1 { font-size: 22px; margin-bottom: 4px; }
-  .header .today { font-size: 13px; color: var(--text2); margin-top: 4px; }
+  :root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#e6edf3;--text2:#8b949e;--accent:#58a6ff;--green:#3fb950;--orange:#d29922;--red:#f85149;--purple:#bc8cff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);padding:16px;max-width:600px;margin:0 auto;line-height:1.6;-webkit-tap-highlight-color:transparent}
+
+  .header{text-align:center;padding:20px 0 6px}
+  .header h1{font-size:20px}
+  .header .today{font-size:13px;color:var(--text2);margin-top:2px}
 
   /* Countdown */
-  .countdowns { margin: 16px 0; }
-  .cd-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    margin-bottom: 8px;
-    font-size: 14px;
-  }
-  .cd-item.soon { border-color: var(--orange); }
-  .cd-item.imminent { border-color: var(--red); background: rgba(248,81,73,0.06); }
-  .cd-item.passed { opacity: 0.4; }
-  .cd-emoji { font-size: 18px; flex-shrink: 0; }
-  .cd-label { flex: 1; }
-  .cd-note { font-size: 11px; color: var(--text2); }
-  .cd-days {
-    font-weight: 700;
-    font-size: 15px;
-    white-space: nowrap;
-    min-width: 60px;
-    text-align: right;
-  }
-  .cd-days.red { color: var(--red); }
-  .cd-days.orange { color: var(--orange); }
-  .cd-days.green { color: var(--green); }
-  .cd-days.grey { color: var(--text2); }
+  .cd{margin:14px 0}
+  .cd-item{display:flex;align-items:center;gap:10px;padding:9px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;font-size:13px}
+  .cd-item.soon{border-color:var(--orange)}
+  .cd-item.imm{border-color:var(--red);background:rgba(248,81,73,.06)}
+  .cd-item.passed{opacity:.35}
+  .cd-e{font-size:16px;flex-shrink:0}
+  .cd-l{flex:1}
+  .cd-n{font-size:11px;color:var(--text2)}
+  .cd-d{font-weight:700;font-size:14px;white-space:nowrap;min-width:55px;text-align:right}
+
+  /* Daily tasks */
+  .daily{background:var(--card);border:2px solid var(--green);border-radius:14px;padding:14px 16px;margin:14px 0}
+  .daily-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .daily-head h2{font-size:16px;flex:1}
+  .daily-head .reset-hint{font-size:11px;color:var(--text2)}
+  .dtask{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+  .dtask:last-of-type{border-bottom:none}
+  .dcheck{width:22px;height:22px;border:2px solid var(--border);border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;-webkit-user-select:none;user-select:none}
+  .dcheck:active{transform:scale(.9)}
+  .dcheck.on{background:var(--green);border-color:var(--green)}
+  .dcheck.on::after{content:"✓";color:#fff;font-size:13px;font-weight:700}
+  .dtask.on .dlabel{text-decoration:line-through;color:var(--text2)}
+  .dlabel{font-size:14px;flex:1}
+  .ddel{font-size:16px;color:var(--text2);cursor:pointer;padding:0 4px;opacity:.4}
+  .ddel:active{opacity:1}
+  .add-row{display:flex;gap:8px;margin-top:10px}
+  .add-input{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:14px;outline:none}
+  .add-input:focus{border-color:var(--accent)}
+  .add-input::placeholder{color:var(--text2)}
+  .add-btn{background:var(--green);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:14px;font-weight:600;cursor:pointer}
+  .add-btn:active{opacity:.8}
+  .saving{font-size:11px;color:var(--accent);text-align:center;margin-top:6px;min-height:16px}
 
   /* Progress */
-  .progress-strip {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 16px 0;
-  }
-  .progress-bar-outer {
-    flex: 1;
-    height: 8px;
-    background: var(--border);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .progress-bar-inner {
-    height: 100%;
-    background: linear-gradient(90deg, var(--green), var(--accent));
-    border-radius: 4px;
-    transition: width 0.5s;
-  }
-  .progress-label {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text2);
-    min-width: 50px;
-    text-align: right;
-  }
+  .pstrip{display:flex;align-items:center;gap:10px;margin:10px 0 14px}
+  .pbar-o{flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden}
+  .pbar-i{height:100%;background:linear-gradient(90deg,var(--green),var(--accent));border-radius:4px;transition:width .4s}
+  .plabel{font-size:13px;font-weight:600;color:var(--text2);min-width:45px;text-align:right}
 
-  /* Phase */
-  .phase {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    margin-bottom: 10px;
-    overflow: hidden;
-  }
-  .phase.active { border-color: var(--green); }
-  .phase.completed { border-color: var(--border); opacity: 0.7; }
-  .phase-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 16px;
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-  .phase-header:active { background: rgba(255,255,255,0.03); }
-  .phase-header .emoji { font-size: 18px; }
-  .phase-header .title { font-size: 15px; font-weight: 600; flex: 1; }
-  .phase-header .badge {
-    font-size: 11px;
-    padding: 2px 8px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.06);
-    color: var(--text2);
-  }
-  .phase-header .badge.now {
-    background: rgba(63,185,80,0.15);
-    color: var(--green);
-  }
-  .phase-header .arrow {
-    font-size: 12px;
-    color: var(--text2);
-    transition: transform 0.2s;
-  }
-  .phase.open .phase-header .arrow { transform: rotate(90deg); }
-  .phase-body {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-  }
-  .phase.open .phase-body { max-height: 800px; }
-  .phase-body-inner { padding: 0 16px 14px; }
-  .phase-progress-mini {
-    font-size: 12px;
-    color: var(--text2);
-    margin-bottom: 6px;
-  }
+  /* Collapsible panels */
+  .panel{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;overflow:hidden}
+  .panel.active{border-color:var(--green)}
+  .panel-h{display:flex;align-items:center;gap:8px;padding:13px 16px;cursor:pointer;-webkit-user-select:none;user-select:none}
+  .panel-h:active{background:rgba(255,255,255,.02)}
+  .panel-h .t{font-size:14px;font-weight:600;flex:1}
+  .panel-h .badge{font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(255,255,255,.06);color:var(--text2)}
+  .panel-h .badge.now{background:rgba(63,185,80,.15);color:var(--green)}
+  .panel-h .arr{font-size:11px;color:var(--text2);transition:transform .2s}
+  .panel.open .panel-h .arr{transform:rotate(90deg)}
+  .panel-b{display:none;padding:0 16px 14px}
+  .panel.open .panel-b{display:block}
+  .pmini{font-size:12px;color:var(--text2);margin-bottom:6px}
 
-  /* Tasks */
-  .task {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    padding: 6px 0;
-    font-size: 14px;
-  }
-  .task .check {
-    flex-shrink: 0;
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--border);
-    border-radius: 4px;
-    margin-top: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-  }
-  .task.done .check { background: var(--green); border-color: var(--green); }
-  .task.done .check::after { content: "✓"; color: #fff; font-weight: 700; }
-  .task.done .label { text-decoration: line-through; color: var(--text2); }
-  .task.urgent .label { color: var(--red); font-weight: 500; }
+  .task{display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:13px}
+  .chk{flex-shrink:0;width:16px;height:16px;border:2px solid var(--border);border-radius:3px;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:10px}
+  .task.done .chk{background:var(--green);border-color:var(--green)}
+  .task.done .chk::after{content:"✓";color:#fff;font-weight:700}
+  .task.done .lbl{text-decoration:line-through;color:var(--text2)}
+  .task.urg .lbl{color:var(--red);font-weight:500}
 
-  /* Sections */
-  .section {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    margin-bottom: 10px;
-    overflow: hidden;
-  }
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 16px;
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-  .section-header:active { background: rgba(255,255,255,0.03); }
-  .section-header .title { font-size: 15px; font-weight: 600; flex: 1; }
-  .section-header .arrow { font-size: 12px; color: var(--text2); transition: transform 0.2s; }
-  .section.open .section-header .arrow { transform: rotate(90deg); }
-  .section-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-  .section.open .section-body { max-height: 800px; }
-  .section-body-inner { padding: 0 16px 14px; }
+  .trow{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:13px}
+  .trow .v{font-weight:600;color:var(--accent)}
+  .ms{display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px}
+  .ms .dot{width:7px;height:7px;border-radius:50%;background:var(--border);flex-shrink:0}
+  .ms.done .dot{background:var(--green)}
+  .ms.done{color:var(--text2);text-decoration:line-through}
+  .sgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .sitem{background:rgba(255,255,255,.04);padding:7px 10px;border-radius:7px;font-size:12px}
+  .sitem .sl{color:var(--text2);font-size:10px}
+  .sitem .sv{font-weight:600}
+  .park{padding:7px 10px;background:rgba(188,140,255,.08);border-left:3px solid var(--purple);border-radius:0 7px 7px 0;margin-bottom:5px;font-size:12px}
+  .park-empty{font-size:12px;color:var(--text2);font-style:italic}
+  .anchors{display:flex;flex-wrap:wrap;gap:5px}
+  .atag{font-size:11px;background:rgba(63,185,80,.1);color:var(--green);padding:3px 9px;border-radius:10px}
+  .footer{text-align:center;padding:16px 0;font-size:11px;color:var(--text2)}
 
-  .tracker-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 0;
-    font-size: 13px;
-  }
-  .tracker-row .val { font-weight: 600; color: var(--accent); }
-  .milestone {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 3px 0;
-    font-size: 13px;
-  }
-  .milestone .dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--border); flex-shrink: 0;
-  }
-  .milestone.done .dot { background: var(--green); }
-  .milestone.done { color: var(--text2); text-decoration: line-through; }
-
-  .spec-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-  .spec-item {
-    background: rgba(255,255,255,0.04);
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 13px;
-  }
-  .spec-item .spec-label { color: var(--text2); font-size: 11px; }
-  .spec-item .spec-val { font-weight: 600; }
-
-  .parking-item {
-    padding: 8px 12px;
-    background: rgba(188,140,255,0.08);
-    border-left: 3px solid var(--purple);
-    border-radius: 0 8px 8px 0;
-    margin-bottom: 6px;
-    font-size: 13px;
-  }
-  .parking-empty { font-size: 13px; color: var(--text2); font-style: italic; }
-
-  .anchors { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 16px 14px; }
-  .anchor-tag {
-    font-size: 12px;
-    background: rgba(63,185,80,0.1);
-    color: var(--green);
-    padding: 4px 10px;
-    border-radius: 12px;
-  }
-
-  .footer {
-    text-align: center;
-    padding: 20px 0;
-    font-size: 12px;
-    color: var(--text2);
-  }
-  .loading { text-align: center; padding: 60px 20px; font-size: 16px; color: var(--text2); }
-  .error-msg { text-align: center; padding: 40px 20px; color: var(--red); }
+  /* Setup */
+  .setup{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin:14px 0;text-align:center}
+  .setup p{font-size:13px;color:var(--text2);margin-bottom:10px}
+  .setup input{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;padding:10px;color:var(--text);font-size:13px;margin-bottom:8px;outline:none}
+  .setup button{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:14px;cursor:pointer}
+  .loading{text-align:center;padding:60px 20px;font-size:16px;color:var(--text2)}
 </style>
 </head>
 <body>
 <div id="app" class="loading">🍞 面包烤制中...</div>
 <script>
-const DATA_URL = 'https://raw.githubusercontent.com/mianbaomaogongzhu/-/main/data.json';
+const REPO='mianbaomaogongzhu/-';
+const API=`https://api.github.com/repos/${REPO}/contents/data.json`;
+let DATA=null, SHA=null, SAVING=false;
 
-function daysUntil(dateStr) {
-  const t = new Date(dateStr + 'T00:00:00+09:00');
-  const now = new Date(new Date().toLocaleString('en-US', {timeZone:'Asia/Tokyo'}));
-  now.setHours(0,0,0,0);
-  return Math.ceil((t - now) / 86400000);
+function getToken(){return localStorage.getItem('gh_token_bread')}
+function setToken(t){localStorage.setItem('gh_token_bread',t)}
+
+function today(){return new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Tokyo'})}
+function todayLabel(){return new Date().toLocaleDateString('zh-CN',{timeZone:'Asia/Tokyo',year:'numeric',month:'long',day:'numeric',weekday:'long'})}
+function daysTo(ds){
+  const t=new Date(ds+'T00:00:00+09:00');
+  const n=new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Tokyo'}));
+  n.setHours(0,0,0,0);
+  return Math.ceil((t-n)/864e5);
+}
+function isCurrent(p){
+  const n=new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Tokyo'}));n.setHours(0,0,0,0);
+  return n>=new Date(p.start_date+'T00:00:00+09:00')&&n<=new Date(p.end_date+'T23:59:59+09:00');
 }
 
-function todayStr() {
-  return new Date().toLocaleDateString('zh-CN', {timeZone:'Asia/Tokyo', year:'numeric', month:'long', day:'numeric', weekday:'long'});
+async function readData(){
+  const h=getToken()?{'Authorization':'Bearer '+getToken()}:{};
+  const r=await fetch(API,{headers:h});
+  const j=await r.json();
+  SHA=j.sha;
+  DATA=JSON.parse(atob(j.content));
+  return DATA;
 }
 
-function isCurrentPhase(p) {
-  const now = new Date(new Date().toLocaleString('en-US', {timeZone:'Asia/Tokyo'}));
-  now.setHours(0,0,0,0);
-  const s = new Date(p.start_date + 'T00:00:00+09:00');
-  const e = new Date(p.end_date + 'T23:59:59+09:00');
-  return now >= s && now <= e;
+async function writeData(msg){
+  if(SAVING||!getToken())return false;
+  SAVING=true;
+  showSaving(true);
+  try{
+    const gr=await fetch(API,{headers:{'Authorization':'Bearer '+getToken()}});
+    const gj=await gr.json();SHA=gj.sha;
+    DATA.meta.last_updated=today();DATA.meta.updated_by='星星';
+    const c=btoa(unescape(encodeURIComponent(JSON.stringify(DATA,null,2))));
+    const r=await fetch(API,{method:'PUT',headers:{'Authorization':'Bearer '+getToken(),'Content-Type':'application/json'},body:JSON.stringify({message:msg,content:c,sha:SHA})});
+    SAVING=false;showSaving(false);return r.ok;
+  }catch(e){SAVING=false;showSaving(false);return false;}
 }
 
-function isPastPhase(p) {
-  const now = new Date(new Date().toLocaleString('en-US', {timeZone:'Asia/Tokyo'}));
-  now.setHours(0,0,0,0);
-  const e = new Date(p.end_date + 'T23:59:59+09:00');
-  return now > e;
-}
+function showSaving(on){const el=document.getElementById('save-status');if(el)el.textContent=on?'保存中...':'';}
 
-async function load() {
-  try {
-    const r = await fetch(DATA_URL + '?t=' + Date.now());
-    if (!r.ok) throw new Error();
-    render(await r.json());
-  } catch(e) {
-    document.getElementById('app').innerHTML = '<div class="error-msg">加载失败喵😿<br><small>刷新试试</small></div>';
+function resetDaily(){
+  if(!DATA.daily_tasks)DATA.daily_tasks={date:today(),tasks:[]};
+  if(DATA.daily_tasks.date!==today()){
+    DATA.daily_tasks.date=today();
+    DATA.daily_tasks.tasks=DATA.daily_tasks.tasks.filter(t=>t.recurring);
+    DATA.daily_tasks.tasks.forEach(t=>t.done=false);
+    return true;
   }
+  return false;
 }
 
-function toggle(el) {
-  el.classList.toggle('open');
+async function toggleDaily(id){
+  const t=DATA.daily_tasks.tasks.find(x=>x.id===id);
+  if(!t)return;
+  t.done=!t.done;
+  render(DATA);
+  await writeData(t.done?'✅ '+t.text:'↩️ 取消: '+t.text);
 }
 
-function render(d) {
-  const app = document.getElementById('app');
-  const allTasks = d.phases.flatMap(p => p.tasks);
-  const doneCount = allTasks.filter(t => t.done).length;
-  const totalCount = allTasks.length;
-  const pct = totalCount ? Math.round(doneCount / totalCount * 100) : 0;
-  let html = '';
+async function addTask(){
+  const inp=document.getElementById('new-task');
+  const txt=inp.value.trim();
+  if(!txt)return;
+  const id='dt'+Date.now();
+  DATA.daily_tasks.tasks.push({id,text:txt,done:false,recurring:false});
+  inp.value='';
+  render(DATA);
+  await writeData('➕ '+txt);
+}
+
+async function delTask(id){
+  DATA.daily_tasks.tasks=DATA.daily_tasks.tasks.filter(t=>t.id!==id);
+  render(DATA);
+  await writeData('🗑️ 删除任务');
+}
+
+function togglePanel(el){el.classList.toggle('open')}
+
+function render(d){
+  const app=document.getElementById('app');
+  const allT=d.phases.flatMap(p=>p.tasks);
+  const doneC=allT.filter(t=>t.done).length,totalC=allT.length;
+  const pct=totalC?Math.round(doneC/totalC*100):0;
+  let h='';
 
   // Header
-  html += '<div class="header"><h1>🍞👑 面包猫公主作战面板</h1>';
-  html += '<div class="today">' + todayStr() + '</div></div>';
+  h+='<div class="header"><h1>🍞👑 面包猫作战面板</h1><div class="today">'+todayLabel()+'</div></div>';
 
   // Countdowns
-  html += '<div class="countdowns">';
-  d.deadlines.forEach(dl => {
-    const days = daysUntil(dl.date);
-    if (days < -30) return;
-    let cls = 'cd-item';
-    let dCls = 'cd-days green';
-    let label = days + '天';
-    if (days < 0) { cls += ' passed'; dCls = 'cd-days grey'; label = '已过'; }
-    else if (days <= 3) { cls += ' imminent'; dCls = 'cd-days red'; }
-    else if (days <= 14) { cls += ' soon'; dCls = 'cd-days orange'; }
-    html += '<div class="' + cls + '">';
-    html += '<span class="cd-emoji">' + dl.emoji + '</span>';
-    html += '<span class="cd-label">' + dl.label + (dl.note ? '<br><span class="cd-note">' + dl.note + '</span>' : '') + '</span>';
-    html += '<span class="' + dCls + '">' + label + '</span>';
-    html += '</div>';
+  h+='<div class="cd">';
+  d.deadlines.forEach(dl=>{
+    const days=daysTo(dl.date);
+    if(days<-30)return;
+    let c='cd-item',dc='cd-d',lb=days+'天';
+    if(days<0){c+=' passed';dc+=' style="color:var(--text2)"';lb='已过';}
+    else if(days<=3){c+=' imm';dc+=' style="color:var(--red)"';}
+    else if(days<=14){c+=' soon';dc+=' style="color:var(--orange)"';}
+    else{dc+=' style="color:var(--green)"';}
+    h+='<div class="'+c+'"><span class="cd-e">'+dl.emoji+'</span><span class="cd-l">'+dl.label+(dl.note?'<br><span class="cd-n">'+dl.note+'</span>':'')+'</span><span class="'+dc+'">'+lb+'</span></div>';
   });
-  html += '</div>';
+  h+='</div>';
 
-  // Progress strip
-  html += '<div class="progress-strip">';
-  html += '<div class="progress-bar-outer"><div class="progress-bar-inner" style="width:' + pct + '%"></div></div>';
-  html += '<span class="progress-label">' + doneCount + '/' + totalCount + '</span>';
-  html += '</div>';
-
-  // Phases
-  d.phases.forEach((p, i) => {
-    const pDone = p.tasks.filter(t => t.done).length;
-    const pTotal = p.tasks.length;
-    const current = isCurrentPhase(p);
-    const past = isPastPhase(p);
-    let cls = 'phase';
-    if (current) cls += ' active open';
-    if (past && pDone === pTotal) cls += ' completed';
-    const badgeCls = current ? 'badge now' : 'badge';
-    const badgeText = current ? '进行中' : p.date_range;
-
-    html += '<div class="' + cls + '" onclick="toggle(this)">';
-    html += '<div class="phase-header">';
-    html += '<span class="emoji">' + p.emoji + '</span>';
-    html += '<span class="title">' + p.title + '</span>';
-    html += '<span class="' + badgeCls + '">' + badgeText + '</span>';
-    html += '<span class="arrow">▶</span>';
-    html += '</div>';
-    html += '<div class="phase-body"><div class="phase-body-inner">';
-    html += '<div class="phase-progress-mini">' + pDone + '/' + pTotal + ' 完成</div>';
-    p.tasks.forEach(t => {
-      const tcls = t.done ? 'task done' : (t.urgent ? 'task urgent' : 'task');
-      html += '<div class="' + tcls + '"><div class="check"></div><span class="label">' + t.text + '</span></div>';
-    });
-    html += '</div></div></div>';
-  });
-
-  // Language trackers (collapsed by default)
-  const k = d.language_tracker.korean;
-  html += '<div class="section" onclick="toggle(this)">';
-  html += '<div class="section-header"><span>🇰🇷</span><span class="title">韩语 TOPIK I · ' + k.streak_days + '天🔥 ' + k.vocab_count + '词</span><span class="arrow">▶</span></div>';
-  html += '<div class="section-body"><div class="section-body-inner">';
-  html += '<div class="tracker-row"><span>目标</span><span class="val">' + k.target + '</span></div>';
-  html += '<div class="tracker-row"><span>报名</span><span class="val" style="color:' + (k.registered ? 'var(--green)' : 'var(--red)') + ';">' + (k.registered ? '✅ 已报名' : k.registration_window) + '</span></div>';
-  html += '<div class="tracker-row"><span>每日时长</span><span class="val">' + k.daily_minutes_current + '分钟</span></div>';
-  html += '<div class="tracker-row"><span>词汇量</span><span class="val">' + k.vocab_count + '</span></div>';
-  html += '<div class="tracker-row"><span>连续天数</span><span class="val">' + k.streak_days + '天 🔥</span></div>';
-  html += '<div style="margin-top:6px;">';
-  k.milestones.forEach(m => {
-    html += '<div class="milestone ' + (m.done ? 'done' : '') + '"><div class="dot"></div><span>' + m.label + '</span></div>';
-  });
-  html += '</div></div></div></div>';
-
-  const ie = d.language_tracker.ielts;
-  html += '<div class="section" onclick="toggle(this)">';
-  html += '<div class="section-header"><span>🇬🇧</span><span class="title">雅思 IELTS · ' + (ie.baseline_score || '待测') + '</span><span class="arrow">▶</span></div>';
-  html += '<div class="section-body"><div class="section-body-inner">';
-  html += '<div class="tracker-row"><span>目标</span><span class="val">' + ie.target + '</span></div>';
-  html += '<div class="tracker-row"><span>基准分</span><span class="val">' + (ie.baseline_score || '待测') + '</span></div>';
-  html += '<div class="tracker-row"><span>考试日期</span><span class="val">' + (ie.exam_date || '待报名') + '</span></div>';
-  html += '<div style="margin-top:6px;">';
-  ie.milestones.forEach(m => {
-    html += '<div class="milestone ' + (m.done ? 'done' : '') + '"><div class="dot"></div><span>' + m.label + '</span></div>';
-  });
-  html += '</div></div></div></div>';
-
-  // Career (collapsed)
-  html += '<div class="section" onclick="toggle(this)">';
-  html += '<div class="section-header"><span>💼</span><span class="title">职业 · ' + d.career.target_city + '</span><span class="arrow">▶</span></div>';
-  html += '<div class="section-body"><div class="section-body-inner">';
-  html += '<div class="tracker-row"><span>Dream Job</span><span class="val" style="font-size:11px;">' + d.career.dream_job + '</span></div>';
-  html += '<div style="margin-top:6px;font-size:13px;font-weight:500;margin-bottom:4px;">作品集</div>';
-  d.career.portfolio_tasks.forEach(t => {
-    const tcls = t.done ? 'task done' : 'task';
-    html += '<div class="' + tcls + '"><div class="check"></div><span class="label">' + t.text + '</span></div>';
-  });
-  html += '</div></div></div>';
-
-  // Game project (collapsed)
-  const g = d.game_project;
-  html += '<div class="section" onclick="toggle(this)">';
-  html += '<div class="section-header"><span>🎮</span><span class="title">' + g.name + ' · ' + g.status + '</span><span class="arrow">▶</span></div>';
-  html += '<div class="section-body"><div class="section-body-inner">';
-  html += '<div class="spec-grid">';
-  html += '<div class="spec-item"><div class="spec-label">地图</div><div class="spec-val">' + g.spec.maps + '</div></div>';
-  html += '<div class="spec-item"><div class="spec-label">天数</div><div class="spec-val">' + g.spec.days + '</div></div>';
-  html += '<div class="spec-item"><div class="spec-label">行动点</div><div class="spec-val">' + g.spec.action_points + '</div></div>';
-  html += '<div class="spec-item"><div class="spec-label">NPC</div><div class="spec-val">' + g.spec.npcs + '</div></div>';
-  html += '<div class="spec-item"><div class="spec-label">事件</div><div class="spec-val">' + g.spec.events + '</div></div>';
-  html += '<div class="spec-item"><div class="spec-label">结局</div><div class="spec-val">' + g.spec.endings + '</div></div>';
-  html += '</div></div></div></div>';
-
-  // Inspiration parking (collapsed)
-  html += '<div class="section" onclick="toggle(this)">';
-  html += '<div class="section-header"><span>🅿️</span><span class="title">灵感停车场 · ' + d.inspiration_parking.length + '条</span><span class="arrow">▶</span></div>';
-  html += '<div class="section-body"><div class="section-body-inner">';
-  if (d.inspiration_parking.length === 0) {
-    html += '<div class="parking-empty">还没有灵感…扔给小苏一句话就行喵</div>';
-  } else {
-    d.inspiration_parking.forEach(item => {
-      html += '<div class="parking-item">' + item.text + ' <span style="color:var(--text2);font-size:11px;">' + (item.date || '') + '</span></div>';
+  // Daily tasks
+  h+='<div class="daily"><div class="daily-head"><h2>☀️ 今日任务</h2><span class="reset-hint">每日自动刷新</span></div>';
+  if(d.daily_tasks&&d.daily_tasks.tasks){
+    d.daily_tasks.tasks.forEach(t=>{
+      const on=t.done?'on':'';
+      h+='<div class="dtask '+on+'">';
+      h+='<div class="dcheck '+on+'" onclick="event.stopPropagation();toggleDaily(\''+t.id+'\')"></div>';
+      h+='<span class="dlabel">'+t.text+'</span>';
+      if(!t.recurring)h+='<span class="ddel" onclick="event.stopPropagation();delTask(\''+t.id+'\')">×</span>';
+      h+='</div>';
     });
   }
-  html += '</div></div></div>';
+  if(getToken()){
+    h+='<div class="add-row"><input id="new-task" class="add-input" placeholder="添加今日任务…" onkeydown="if(event.key===\'Enter\')addTask()"><button class="add-btn" onclick="addTask()">+</button></div>';
+  }
+  h+='<div class="saving" id="save-status"></div></div>';
 
-  // Daily anchors (always visible, no collapse)
-  html += '<div class="section open">';
-  html += '<div class="section-header"><span>⚓</span><span class="title">每日锚点</span></div>';
-  html += '<div class="section-body" style="max-height:200px;"><div class="anchors">';
-  d.daily_anchors.forEach(a => { html += '<span class="anchor-tag">' + a + '</span>'; });
-  html += '</div></div></div>';
+  // Progress
+  h+='<div class="pstrip"><div class="pbar-o"><div class="pbar-i" style="width:'+pct+'%"></div></div><span class="plabel">'+doneC+'/'+totalC+'</span></div>';
+
+  // Phases
+  d.phases.forEach(p=>{
+    const pD=p.tasks.filter(t=>t.done).length,pT=p.tasks.length;
+    const cur=isCurrent(p);
+    let c='panel';
+    if(cur)c+=' active open';
+    const bCls=cur?'badge now':'badge';
+    const bTxt=cur?'进行中':p.date_range;
+    h+='<div class="'+c+'" onclick="togglePanel(this)"><div class="panel-h"><span class="t">'+p.title+'</span><span class="'+bCls+'">'+bTxt+'</span><span class="arr">▶</span></div>';
+    h+='<div class="panel-b"><div class="pmini">'+pD+'/'+pT+' 完成</div>';
+    p.tasks.forEach(t=>{
+      const tc=t.done?'task done':(t.urgent?'task urg':'task');
+      h+='<div class="'+tc+'"><div class="chk"></div><span class="lbl">'+t.text+'</span></div>';
+    });
+    h+='</div></div>';
+  });
+
+  // Korean
+  const k=d.language_tracker.korean;
+  h+='<div class="panel" onclick="togglePanel(this)"><div class="panel-h"><span class="t">🇰🇷 韩语 · '+k.streak_days+'天🔥 '+k.vocab_count+'词</span><span class="arr">▶</span></div><div class="panel-b">';
+  h+='<div class="trow"><span>目标</span><span class="v">'+k.target+'</span></div>';
+  h+='<div class="trow"><span>报名</span><span class="v" style="color:'+(k.registered?'var(--green)':'var(--red)')+';">'+(k.registered?'✅ 已报名':k.registration_window)+'</span></div>';
+  h+='<div class="trow"><span>每日</span><span class="v">'+k.daily_minutes_current+'分钟</span></div>';
+  h+='<div class="trow"><span>词汇</span><span class="v">'+k.vocab_count+'</span></div>';
+  h+='<div class="trow"><span>连续</span><span class="v">'+k.streak_days+'天🔥</span></div>';
+  k.milestones.forEach(m=>{h+='<div class="ms '+(m.done?'done':'')+'"><div class="dot"></div><span>'+m.label+'</span></div>';});
+  h+='</div></div>';
+
+  // IELTS
+  const ie=d.language_tracker.ielts;
+  h+='<div class="panel" onclick="togglePanel(this)"><div class="panel-h"><span class="t">🇬🇧 雅思 · '+(ie.baseline_score||'待测')+'</span><span class="arr">▶</span></div><div class="panel-b">';
+  h+='<div class="trow"><span>目标</span><span class="v">'+ie.target+'</span></div>';
+  h+='<div class="trow"><span>基准</span><span class="v">'+(ie.baseline_score||'待测')+'</span></div>';
+  h+='<div class="trow"><span>考试</span><span class="v">'+(ie.exam_date||'待报名')+'</span></div>';
+  ie.milestones.forEach(m=>{h+='<div class="ms '+(m.done?'done':'')+'"><div class="dot"></div><span>'+m.label+'</span></div>';});
+  h+='</div></div>';
+
+  // Career
+  h+='<div class="panel" onclick="togglePanel(this)"><div class="panel-h"><span class="t">💼 职业 · '+d.career.target_city+'</span><span class="arr">▶</span></div><div class="panel-b">';
+  h+='<div class="trow"><span>Dream</span><span class="v" style="font-size:11px">'+d.career.dream_job+'</span></div>';
+  d.career.portfolio_tasks.forEach(t=>{h+='<div class="task '+(t.done?'done':'')+'"><div class="chk"></div><span class="lbl">'+t.text+'</span></div>';});
+  h+='</div></div>';
+
+  // Game
+  const g=d.game_project;
+  h+='<div class="panel" onclick="togglePanel(this)"><div class="panel-h"><span class="t">🎮 '+g.name+'</span><span class="badge">'+g.status+'</span><span class="arr">▶</span></div><div class="panel-b">';
+  h+='<div class="sgrid"><div class="sitem"><div class="sl">地图</div><div class="sv">'+g.spec.maps+'</div></div><div class="sitem"><div class="sl">天数</div><div class="sv">'+g.spec.days+'</div></div><div class="sitem"><div class="sl">行动点</div><div class="sv">'+g.spec.action_points+'</div></div><div class="sitem"><div class="sl">NPC</div><div class="sv">'+g.spec.npcs+'</div></div><div class="sitem"><div class="sl">事件</div><div class="sv">'+g.spec.events+'</div></div><div class="sitem"><div class="sl">结局</div><div class="sv">'+g.spec.endings+'</div></div></div>';
+  h+='</div></div>';
+
+  // Parking
+  h+='<div class="panel" onclick="togglePanel(this)"><div class="panel-h"><span class="t">🅿️ 灵感停车场 · '+d.inspiration_parking.length+'条</span><span class="arr">▶</span></div><div class="panel-b">';
+  if(!d.inspiration_parking.length)h+='<div class="park-empty">扔给小苏一句话就行喵</div>';
+  else d.inspiration_parking.forEach(i=>{h+='<div class="park">'+i.text+' <span style="color:var(--text2);font-size:10px">'+(i.date||'')+'</span></div>';});
+  h+='</div></div>';
+
+  // Anchors
+  h+='<div class="panel open"><div class="panel-h"><span class="t">⚓ 每日锚点</span></div><div class="panel-b"><div class="anchors">';
+  d.daily_anchors.forEach(a=>{h+='<span class="atag">'+a+'</span>';});
+  h+='</div></div></div>';
 
   // Footer
-  html += '<div class="footer">🍞 小苏 × 可颂喵公主 · 面包国出品<br>上次更新：' + d.meta.last_updated + ' by ' + d.meta.updated_by + '</div>';
+  h+='<div class="footer">🍞 小苏 × 可颂喵公主<br>'+d.meta.last_updated+' · '+d.meta.updated_by+'</div>';
 
-  app.innerHTML = html;
-  app.className = '';
+  // Token setup if missing
+  if(!getToken()){
+    h+='<div class="setup"><p>首次使用：输入令牌启用打勾功能</p><input id="tk-input" type="password" placeholder="粘贴GitHub token…"><br><button onclick="setToken(document.getElementById(\'tk-input\').value);location.reload();">启用</button></div>';
+  }
+
+  app.innerHTML=h;app.className='';
 }
 
-load();
+async function init(){
+  try{
+    await readData();
+    const needWrite=resetDaily();
+    render(DATA);
+    if(needWrite&&getToken())await writeData('🌅 新的一天');
+  }catch(e){
+    document.getElementById('app').innerHTML='<div style="text-align:center;padding:40px;color:var(--red)">加载失败喵😿<br><small>刷新试试</small></div>';
+  }
+}
+init();
 </script>
 </body>
 </html>
