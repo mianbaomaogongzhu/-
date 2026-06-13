@@ -2,16 +2,25 @@
   "meta": {
     "owner": "可颂喵公主 星星",
     "created": "2026-06-12",
-    "last_updated": "2026-06-12",
+    "last_updated": "2026-06-13",
     "updated_by": "小苏",
     "current_period": "2026年夏 · 6月–9月作战计划"
   },
+  "deadlines": [
+    {"label": "TOPIK报名开始（抢！）", "date": "2026-07-06", "emoji": "🚨", "urgent": true},
+    {"label": "TOPIK报名截止", "date": "2026-07-21", "emoji": "⏰"},
+    {"label": "学期课程结束", "date": "2026-07-17", "emoji": "🏫"},
+    {"label": "雅思考试（大阪）", "date": "2026-08-29", "emoji": "🇬🇧", "note": "待报名确认"},
+    {"label": "TOPIK考试日", "date": "2026-10-18", "emoji": "🇰🇷"}
+  ],
   "phases": [
     {
       "id": "phase1",
       "title": "阶段一 · 学业保卫战",
       "emoji": "🏫",
       "date_range": "6/12 – 7月中",
+      "start_date": "2026-06-12",
+      "end_date": "2026-07-15",
       "status": "active",
       "tasks": [
         {"id": "p1t1", "text": "东洋美术史 · 每周全勤到7月底", "done": false, "type": "weekly"},
@@ -27,6 +36,8 @@
       "title": "阶段二 · 期末冲刺 + 死线警报",
       "emoji": "🔥",
       "date_range": "7月中 – 8月初",
+      "start_date": "2026-07-15",
+      "end_date": "2026-08-05",
       "status": "upcoming",
       "tasks": [
         {"id": "p2t1", "text": "🚨 7/6–7/21 报名10月TOPIK（先到先得！）", "done": false, "urgent": true},
@@ -41,6 +52,8 @@
       "title": "阶段三 · 暑假建设期（双语言轨道）",
       "emoji": "🏗️",
       "date_range": "8月",
+      "start_date": "2026-08-01",
+      "end_date": "2026-08-31",
       "status": "upcoming",
       "tasks": [
         {"id": "p3t1", "text": "雅思定位模考一套（剑桥真题）", "done": false},
@@ -57,6 +70,8 @@
       "title": "阶段四 · 收获季 + 新学期启动",
       "emoji": "🚀",
       "date_range": "9月",
+      "start_date": "2026-09-01",
+      "end_date": "2026-09-30",
       "status": "upcoming",
       "tasks": [
         {"id": "p4t1", "text": "考雅思 → 出分，决定是否二刷", "done": false},
