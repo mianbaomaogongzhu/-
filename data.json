@@ -2,7 +2,7 @@
   "meta": {
     "owner": "可颂喵公主 星星",
     "created": "2026-06-12",
-    "last_updated": "2026-06-13",
+    "last_updated": "2026-06-20",
     "updated_by": "小苏",
     "current_period": "2026年夏 · 6月–9月作战计划"
   },
@@ -88,6 +88,18 @@
           "text": "韩语热身：每天睡前10-15分钟背词",
           "done": false,
           "type": "daily"
+        },
+        {
+          "id": "p1t7",
+          "text": "博物館概論 · 回家整理缺席回数，补齐缺少的教案（已拿到最近一次，其余待确认）",
+          "done": false,
+          "urgent": true
+        },
+        {
+          "id": "p1t8",
+          "text": "博物館参観レポート×2（博物館概論+博物館資料論）· 下周六前提交",
+          "done": false,
+          "urgent": true
         }
       ]
     },
@@ -122,7 +134,7 @@
         },
         {
           "id": "p2t5",
-          "text": "跟进 teamLab 实习结果",
+          "text": "teamLab · Art Catalyst書類落選。Solution Catalyst課題検討中（4週間以内・ファッションEC調査）",
           "done": false
         }
       ]
