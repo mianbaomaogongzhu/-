@@ -259,7 +259,90 @@
           "label": "模考达到140分（2级线）",
           "done": false
         }
-      ]
+      ],
+      "grammar_plan": {
+        "total_weeks": 17,
+        "phases": [
+          {
+            "name": "基础期",
+            "weeks": "第1-4周（7月）",
+            "daily_minutes": 15,
+            "grammar_per_week": "3-4个",
+            "weekly_content": [
+              {
+                "week": 1,
+                "topic": "助词 은/는、이/가、을/를、에/에서",
+                "jp": "は/が/を/に/で",
+                "done": false
+              },
+              {
+                "week": 2,
+                "topic": "现在时 -아/어요 + 过去时 -았/었어요",
+                "jp": "です・ます/でした",
+                "done": false
+              },
+              {
+                "week": 3,
+                "topic": "-고 싶다、-ㄹ 수 있다、-지 못하다",
+                "jp": "たい/できる/できない",
+                "done": false
+              },
+              {
+                "week": 4,
+                "topic": "-고、-지만、-(으)니까",
+                "jp": "て/けど/から",
+                "done": false
+              }
+            ]
+          },
+          {
+            "name": "扩展期",
+            "weeks": "第5-8周（8月）",
+            "daily_minutes": 30,
+            "grammar_per_week": "5个",
+            "weekly_content": [
+              {
+                "week": 5,
+                "topic": "-(으)면、-아/어서、-(으)ㄹ 거예요",
+                "jp": "たら/ので/未来形",
+                "done": false
+              },
+              {
+                "week": 6,
+                "topic": "-고 있다、-아/어 보다、-(으)세요",
+                "jp": "ている/てみる/敬語",
+                "done": false
+              },
+              {
+                "week": 7,
+                "topic": "-지 마세요、-(으)ㄹ까요、-아/어도",
+                "jp": "ないで/ましょうか/ても",
+                "done": false
+              },
+              {
+                "week": 8,
+                "topic": "复习+第一套真题模考",
+                "jp": "",
+                "done": false
+              }
+            ]
+          },
+          {
+            "name": "真题期",
+            "weeks": "第9-17周（9-10月）",
+            "daily_minutes": 30,
+            "grammar_per_week": "真题错题复习",
+            "weekly_content": [
+              {
+                "week": "9-17",
+                "topic": "每周一套真题+错题语法重点复习",
+                "jp": "",
+                "done": false
+              }
+            ]
+          }
+        ]
+      }
     },
     "ielts": {
       "target": "总分7.0（8月底大阪机考）",
